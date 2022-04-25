@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieStore.Abstractions;
 using MovieStore.Models;
-using MovieStore.Models.Enums;
 
 namespace MovieStore.Controllers;
 
@@ -11,48 +10,29 @@ public class MovieController : ControllerBase
 {
     private readonly ILogger<MovieController> _logger;
 
-    private IMovieService<Movie> _movieService;
+    private readonly IService<Movie> _service;
 
-    public MovieController(ILogger<MovieController> logger, IMovieService<Movie> movieService)
+    public MovieController(ILogger<MovieController> logger, IService<Movie> service)
     {
         _logger = logger;
-        _movieService = movieService;
+        _service = service;
     }
     
     [HttpPost]
-    public Movie Post
-    (
-        [FromForm(Name = "Title")]string title,
-        [FromForm(Name = "Description")]string? description,
-        [FromForm(Name = "Genres")]Genre[] genres,
-        [FromForm(Name = "ReleaseDate")]DateTime releaseDate
-    )
-    {
-        return _movieService.Create(title, description, genres.ToArray(), releaseDate);
-    }
-    
+    public Movie Post([FromBody]Movie movie) => _service.Create(movie);
+
     [HttpGet]
-    public IEnumerable<Movie> Get() => _movieService.Get();
+    public IEnumerable<Movie> Get() => _service.Get();
 
     [HttpGet]
     [Route("{id}")]
-    public Movie? Get(Guid id) => _movieService.Get(id);
+    public Movie? Get(Guid id) => _service.Get(id);
 
     [HttpPatch]
     [Route("{id}")]
-    public Movie? Patch
-    (
-        Guid id,
-        [FromForm(Name = "Title")] string title,
-        [FromForm(Name = "Description")] string? description,
-        [FromForm(Name = "Genres")] Genre[] genres,
-        [FromForm(Name = "ReleaseDate")] DateTime releaseDate
-    )
-    {
-        return _movieService.Update(id, title, description, genres, releaseDate);
-    }
+    public Movie? Patch(Guid id, [FromBody]Movie movie) => _service.Update(id, movie);
 
     [HttpDelete]
     [Route("{id}")]
-    public void Delete(Guid id) => _movieService.Delete(id);
+    public void Delete(Guid id) => _service.Delete(id);
 }
