@@ -1,58 +1,34 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieStore.Abstractions;
+using MovieStore.ActionFilters;
 using MovieStore.Models;
-using MovieStore.Models.Enums;
 
 namespace MovieStore.Controllers;
 
 [ApiController]
 [Route("Movies")]
+[ServiceFilter(typeof(TimerFilterAttribute))]
 public class MovieController : ControllerBase
 {
-    private readonly ILogger<MovieController> _logger;
+   private readonly IService<Movie> _service;
 
-    private IMovieService<Movie> _movieService;
-
-    public MovieController(ILogger<MovieController> logger, IMovieService<Movie> movieService)
+    public MovieController(IService<Movie> service)
     {
-        _logger = logger;
-        _movieService = movieService;
+        _service = service;
     }
     
     [HttpPost]
-    public Movie Post
-    (
-        [FromForm(Name = "Title")]string title,
-        [FromForm(Name = "Description")]string? description,
-        [FromForm(Name = "Genres")]Genre[] genres,
-        [FromForm(Name = "ReleaseDate")]DateTime releaseDate
-    )
-    {
-        return _movieService.Create(title, description, genres.ToArray(), releaseDate);
-    }
+    public Movie Post([FromHeader]string apiKey, [FromBody]Movie movie) => _service.Create(movie);
+
+    [HttpGet]
+    public IEnumerable<Movie> Get([FromHeader]string apiKey) => _service.Get();
     
-    [HttpGet]
-    public IEnumerable<Movie> Get() => _movieService.Get();
-
-    [HttpGet]
-    [Route("{id}")]
-    public Movie? Get(Guid id) => _movieService.Get(id);
-
-    [HttpPatch]
-    [Route("{id}")]
-    public Movie? Patch
-    (
-        Guid id,
-        [FromForm(Name = "Title")] string title,
-        [FromForm(Name = "Description")] string? description,
-        [FromForm(Name = "Genres")] Genre[] genres,
-        [FromForm(Name = "ReleaseDate")] DateTime releaseDate
-    )
-    {
-        return _movieService.Update(id, title, description, genres, releaseDate);
-    }
-
-    [HttpDelete]
-    [Route("{id}")]
-    public void Delete(Guid id) => _movieService.Delete(id);
+    [HttpGet("{id}")]
+    public Movie? Get([FromHeader]string apiKey, Guid id) => _service.Get(id);
+    
+    [HttpPatch("{id}")]
+    public Movie? Patch([FromHeader]string apiKey, [FromBody]Movie movie, Guid id) => _service.Update(id, movie);
+    
+    [HttpDelete("{id}")]
+    public void Delete([FromHeader]string apiKey, Guid id) => _service.Delete(id);
 }
