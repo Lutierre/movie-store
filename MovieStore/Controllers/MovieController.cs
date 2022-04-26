@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieStore.Abstractions;
+using MovieStore.ActionFilters;
 using MovieStore.Models;
 
 namespace MovieStore.Controllers;
@@ -19,20 +20,22 @@ public class MovieController : ControllerBase
     }
     
     [HttpPost]
-    public Movie Post([FromBody]Movie movie) => _service.Create(movie);
+    [ServiceFilter(typeof(TimerFilterAttribute))]
+    public Movie Post([FromHeader]string apiKey, [FromBody]Movie movie) => _service.Create(movie);
 
     [HttpGet]
-    public IEnumerable<Movie> Get() => _service.Get();
+    [ServiceFilter(typeof(TimerFilterAttribute))]
+    public IEnumerable<Movie> Get([FromHeader]string apiKey) => _service.Get();
 
-    [HttpGet]
-    [Route("{id}")]
-    public Movie? Get(Guid id) => _service.Get(id);
+    [HttpGet("{id}")]
+    [ServiceFilter(typeof(TimerFilterAttribute))]
+    public Movie? Get([FromHeader]string apiKey, Guid id) => _service.Get(id);
 
-    [HttpPatch]
-    [Route("{id}")]
-    public Movie? Patch(Guid id, [FromBody]Movie movie) => _service.Update(id, movie);
+    [HttpPatch("{id}")]
+    [ServiceFilter(typeof(TimerFilterAttribute))]
+    public Movie? Patch([FromHeader]string apiKey, [FromBody]Movie movie, Guid id) => _service.Update(id, movie);
 
-    [HttpDelete]
-    [Route("{id}")]
-    public void Delete(Guid id) => _service.Delete(id);
+    [HttpDelete("{id}")]
+    [ServiceFilter(typeof(TimerFilterAttribute))]
+    public void Delete([FromHeader]string apiKey, Guid id) => _service.Delete(id);
 }
