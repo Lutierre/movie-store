@@ -1,11 +1,13 @@
 using MovieStore.Abstractions;
 using MovieStore.Middlewares;
+using MovieStore.ActionFilters;
 using MovieStore.Models;
 using MovieStore.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IService<Movie>, Service>();
+builder.Services.AddTransient<TimerFilterAttribute>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
