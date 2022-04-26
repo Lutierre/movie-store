@@ -1,4 +1,5 @@
 using MovieStore.Abstractions;
+using MovieStore.Middlewares;
 using MovieStore.Models;
 using MovieStore.Services;
 
@@ -23,6 +24,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseApiKey();
 
 app.MapControllers();
 
