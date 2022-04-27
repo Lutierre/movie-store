@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using MovieStore.Models.Enums;
+﻿using MovieStore.Models.Enums;
 
 namespace MovieStore.Models;
 
@@ -13,15 +12,5 @@ public class Movie
 
     public Genre[] Genres { get; set; }
 
-    [JsonPropertyName("release_date")]
     public DateTime ReleaseDate { get; set; }
-
-    public Movie(string title, string? description, Genre[] genres, DateTime releaseDate)
-    {
-        Id = Guid.NewGuid();
-        Title = title;
-        Description = description;
-        Genres = genres;
-        ReleaseDate = releaseDate;
-    }
 }
