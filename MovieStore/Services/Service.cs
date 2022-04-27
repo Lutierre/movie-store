@@ -24,7 +24,7 @@ public class Service : IService<Movie>
 
         if (movie is null)
         {
-            return null;
+            throw new ArgumentNullException();
         }
 
         movie.Title = entity.Title;
@@ -41,7 +41,7 @@ public class Service : IService<Movie>
 
         if (movie is null)
         {
-            return;
+            throw new ArgumentNullException();
         }
 
         _movies.Remove(movie);
