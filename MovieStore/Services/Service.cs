@@ -5,15 +5,15 @@ namespace MovieStore.Services;
 
 public class Service : IService<Movie>
 {
-    private static readonly List<Movie> _movies = new List<Movie>();
+    private static readonly List<Movie> Movies = new List<Movie>();
     
-    public IEnumerable<Movie> Get() => _movies;
+    public IEnumerable<Movie> Get() => Movies;
 
-    public Movie? Get(Guid id) => _movies.Find(movie => movie.Id == id);
+    public Movie? Get(Guid id) => Movies.Find(movie => movie.Id == id);
 
     public Movie Create(Movie entity)
     {
-        _movies.Add(entity);
+        Movies.Add(entity);
 
         return entity;
     }
@@ -44,6 +44,6 @@ public class Service : IService<Movie>
             throw new ArgumentNullException();
         }
 
-        _movies.Remove(movie);
+        Movies.Remove(movie);
     }
 }

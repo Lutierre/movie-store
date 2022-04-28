@@ -4,7 +4,7 @@ public class ApiKeyMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly IConfiguration _configuration;
-    private const string ApiKeyName = "ApiKey";
+    private const string ApiKeyName = "api_key";
     
     public ApiKeyMiddleware(RequestDelegate next, IConfiguration configuration)
     {

@@ -11,24 +11,24 @@ namespace MovieStore.Controllers;
 public class MovieController : ControllerBase
 {
     private readonly IService<Movie> _service;
-    
+
     public MovieController(IService<Movie> service)
     {
         _service = service;
     }
-    
+
     [HttpPost]
-    public Movie Post([FromHeader]string apiKey, [FromBody]Movie movie) => _service.Create(movie);
+    public Movie Post([FromBody] Movie movie) => _service.Create(movie);
 
     [HttpGet]
-    public IEnumerable<Movie> Get([FromHeader]string apiKey) => _service.Get();
+    public IEnumerable<Movie> Get() => _service.Get();
 
     [HttpGet("{id}")]
-    public Movie? Get([FromHeader]string apiKey, Guid id) => _service.Get(id);
+    public Movie? Get(Guid id) => _service.Get(id);
 
     [HttpPatch("{id}")]
-    public Movie? Patch([FromHeader]string apiKey, [FromBody]Movie movie, Guid id) => _service.Update(id, movie);
+    public Movie? Patch([FromBody]Movie movie, Guid id) => _service.Update(id, movie);
 
     [HttpDelete("{id}")]
-    public void Delete([FromHeader]string apiKey, Guid id) => _service.Delete(id);
+    public void Delete(Guid id) => _service.Delete(id);
 }
