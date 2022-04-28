@@ -1,10 +1,11 @@
-﻿using MovieStore.Models.Enums;
+﻿using System.Text.Json.Serialization;
+using MovieStore.Models.Enums;
 
 namespace MovieStore.Models;
 
 public class Movie
 {
-    public Guid Id { get; }
+    public Guid Id { get; } = Guid.NewGuid();
 
     public string Title { get; set; }
 
@@ -12,5 +13,6 @@ public class Movie
 
     public Genre[] Genres { get; set; }
 
+    [JsonPropertyName("release_date")]
     public DateTime ReleaseDate { get; set; }
 }
