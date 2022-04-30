@@ -1,9 +1,9 @@
+using Core.Models;
 using Microsoft.AspNetCore.Mvc;
-using MovieStore.Abstractions;
-using MovieStore.ActionFilters;
-using MovieStore.Models;
+using UI.Abstractions;
+using UI.ActionFilters;
 
-namespace MovieStore.Controllers;
+namespace UI.Controllers;
 
 [ApiController]
 [ServiceFilter(typeof(TimerFilterAttribute))]

@@ -1,7 +1,7 @@
-﻿using MovieStore.Abstractions;
-using MovieStore.Models;
+﻿using Core.Models;
+using UI.Abstractions;
 
-namespace MovieStore.Services;
+namespace UI.Services;
 
 public class Service : IService<Movie>
 {

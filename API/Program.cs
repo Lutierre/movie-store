@@ -1,8 +1,8 @@
-using MovieStore.Abstractions;
-using MovieStore.Middlewares;
-using MovieStore.ActionFilters;
-using MovieStore.Models;
-using MovieStore.Services;
+using Core.Models;
+using UI.Abstractions;
+using UI.Middlewares;
+using UI.ActionFilters;
+using UI.Services;
 using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);

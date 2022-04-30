@@ -1,4 +1,4 @@
-﻿namespace MovieStore.Models.Enums;
+﻿namespace UI.Models.Enums;
 
 public enum Genre
 {

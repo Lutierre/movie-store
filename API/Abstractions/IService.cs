@@ -1,4 +1,4 @@
-﻿namespace MovieStore.Abstractions;
+﻿namespace UI.Abstractions;
 
 public interface IService<T>
 {

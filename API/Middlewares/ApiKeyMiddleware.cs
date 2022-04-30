@@ -1,4 +1,4 @@
-﻿namespace MovieStore.Middlewares;
+﻿namespace UI.Middlewares;
 
 public class ApiKeyMiddleware
 {

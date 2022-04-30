@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace MovieStore.ActionFilters;
+namespace UI.ActionFilters;
 
 public class TimerFilterAttribute : IActionFilter
 {

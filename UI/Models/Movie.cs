@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using MovieStore.Models.Enums;
+using UI.Models.Enums;
 
-namespace MovieStore.Models;
+namespace UI.Models;
 
 public class Movie
 {
