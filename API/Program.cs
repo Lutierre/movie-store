@@ -1,4 +1,6 @@
 using Core.Models;
+using DAL;
+using Microsoft.EntityFrameworkCore;
 using UI.Abstractions;
 using UI.Middlewares;
 using UI.ActionFilters;
@@ -7,6 +9,11 @@ using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<MovieStoreContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(MovieStoreContext).Assembly.FullName)), ServiceLifetime.Transient);
+
+builder.Services.AddScoped<MovieStoreContext>();
 builder.Services.AddSingleton<IService<Movie>, Service>();
 builder.Services.AddTransient<TimerFilterAttribute>();
 

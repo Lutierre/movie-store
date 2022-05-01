@@ -29,7 +29,6 @@ public class Service : IService<Movie>
 
         movie.Title = entity.Title;
         movie.Description = entity.Description;
-        movie.Genres = entity.Genres;
         movie.ReleaseDate = entity.ReleaseDate;
 
         return movie;
