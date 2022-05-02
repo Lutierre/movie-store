@@ -1,34 +1,34 @@
+using BLL.Abstractions.Interfaces;
 using Core.Models;
 using Microsoft.AspNetCore.Mvc;
-using UI.Abstractions;
 using UI.ActionFilters;
 
-namespace UI.Controllers;
+namespace API.Controllers;
 
 [ApiController]
 [ServiceFilter(typeof(TimerFilterAttribute))]
 [Route("Movies")]
-public class MovieController : ControllerBase
+internal class MovieController : ControllerBase
 {
-    private readonly IService<Movie> _service;
+    private readonly IService<Movie?> _movieService;
 
-    public MovieController(IService<Movie> service)
+    public MovieController(IService<Movie?> movieService)
     {
-        _service = service;
+        _movieService = movieService;
     }
 
     [HttpPost]
-    public Movie Post([FromBody] Movie movie) => _service.Create(movie);
+    public Movie? Post([FromBody] Movie? movie) => _movieService.CreateAsync(movie).Result;
 
     [HttpGet]
-    public IEnumerable<Movie> Get() => _service.Get();
+    public IEnumerable<Movie?> Get() => _movieService.GetAsync().Result;
 
     [HttpGet("{id}")]
-    public Movie? Get(Guid id) => _service.Get(id);
+    public Movie? Get(Guid id) => _movieService.GetAsync(id).Result;
 
     [HttpPatch("{id}")]
-    public Movie? Patch([FromBody]Movie movie, Guid id) => _service.Update(id, movie);
+    public Movie? Patch([FromBody]Movie? movie, Guid id) => _movieService.UpdateAsync(id, movie).Result;
 
     [HttpDelete("{id}")]
-    public void Delete(Guid id) => _service.Delete(id);
+    public void Delete(Guid id) => _movieService.DeleteAsync(id);
 }

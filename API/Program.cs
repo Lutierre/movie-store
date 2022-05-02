@@ -1,10 +1,11 @@
+using BLL.Abstractions.Interfaces;
+using BLL.Services;
 using Core.Models;
 using DAL;
+using DAL.Context;
 using Microsoft.EntityFrameworkCore;
-using UI.Abstractions;
 using UI.Middlewares;
 using UI.ActionFilters;
-using UI.Services;
 using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,8 +15,10 @@ builder.Services.AddDbContext<MovieStoreContext>(options =>
         optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(MovieStoreContext).Assembly.FullName)), ServiceLifetime.Transient);
 
 builder.Services.AddScoped<MovieStoreContext>();
-builder.Services.AddSingleton<IService<Movie>, Service>();
+builder.Services.AddSingleton<IService<Movie>, MovieService>();
 builder.Services.AddTransient<TimerFilterAttribute>();
+// todo: to read
+builder.Services.AddTransient<UnitOfWork>();
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
