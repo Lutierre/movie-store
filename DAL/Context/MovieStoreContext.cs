@@ -1,7 +1,7 @@
 ﻿using Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL;
+namespace DAL.Context;
 
 public class MovieStoreContext : DbContext
 {
