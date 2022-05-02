@@ -9,9 +9,10 @@ public class Movie : BaseEntity
     public string Title { get; set; }
 
     public string? Description { get; set; }
-
-    [JsonPropertyName("release_date")]
+    
     [Required]
+    [DataType(DataType.Date)]
+    [JsonPropertyName("release_date")]
     public DateTime ReleaseDate { get; set; }
     
     [Required]

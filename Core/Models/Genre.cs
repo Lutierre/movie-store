@@ -5,7 +5,7 @@ namespace Core.Models;
 public class Genre : BaseEntity
 {
     [Required]
-    public string Name { get; set; }
+    public Core.Models.Enums.Genre Code { get; set; }
     
     public List<Movie> Movies { get; set; }
 }
