@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Core.ManyToMany;
 
 namespace Core.Models;
 
@@ -15,9 +16,7 @@ public class Movie : BaseEntity
     [JsonPropertyName("release_date")]
     public DateTime ReleaseDate { get; set; }
     
-    [Required]
     public List<Director> Directors { get; set; }
     
-    [Required]
-    public List<Genre> Genres { get; set; }
+    public List<GenreMovie> GenreMovies { get; set; }
 }

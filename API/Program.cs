@@ -1,3 +1,5 @@
+using API.ActionFilters;
+using API.Middlewares;
 using BLL.Abstractions.Interfaces;
 using BLL.Services;
 using Core.Models;
@@ -6,22 +8,18 @@ using DAL.Abstractions.Interfaces;
 using DAL.Context;
 using DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
-using UI.Middlewares;
-using UI.ActionFilters;
 using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MovieStoreContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-        optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(MovieStoreContext).Assembly.FullName)), ServiceLifetime.Transient);
+        optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(MovieStoreContext).Assembly.FullName)));
 
-builder.Services.AddScoped<MovieStoreContext>();
+builder.Services.AddScoped<TimerFilterAttribute>();
 builder.Services.AddScoped<IService<Movie>, MovieService>();
-builder.Services.AddTransient<TimerFilterAttribute>();
-// todo: to read
-builder.Services.AddTransient<UnitOfWork>();
-builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<UnitOfWork>();
+// builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {

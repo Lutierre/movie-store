@@ -68,7 +68,7 @@ namespace DAL.Migrations
                     b.ToTable("Directors");
                 });
 
-            modelBuilder.Entity("Core.Models.Genre", b =>
+            modelBuilder.Entity("Core.Models.GenreCode", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,7 +162,7 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("GenreMovie", b =>
                 {
-                    b.HasOne("Core.Models.Genre", null)
+                    b.HasOne("Core.Models.GenreCode", null)
                         .WithMany()
                         .HasForeignKey("GenresId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,25 +1,41 @@
 ﻿using BLL.Abstractions.Interfaces;
 using Core.Models;
-using DAL.Abstractions.Interfaces;
+using DAL;
 
 namespace BLL.Services;
 
 public class MovieService : IService<Movie>
 {
-    private readonly IGenericRepository<Movie?> _genericRepository;
+    private readonly UnitOfWork _unitOfWork;
 
-    public MovieService(IGenericRepository<Movie?> genericRepository)
+    public MovieService(UnitOfWork unitOfWork)
     {
-        _genericRepository = genericRepository;
+        _unitOfWork = unitOfWork;
     }
 
-    public async Task<List<Movie?>> GetAsync() => await _genericRepository.GetAsync();
+    public async Task<List<Movie>> GetAsync() => await _unitOfWork.MovieRepository.GetAsync();
 
-    public async Task<Movie?> GetAsync(Guid id) => await _genericRepository.GetAsync(id);
+    public async Task<Movie?> GetAsync(Guid id) => await _unitOfWork.MovieRepository.GetAsync(id);
 
-    public async Task<Movie?> CreateAsync(Movie entity) => await _genericRepository.CreateAsync(entity);
+    public async Task<Movie> CreateAsync(Movie entity)
+    {
+        var movie = await _unitOfWork.MovieRepository.CreateAsync(entity);
+        _unitOfWork.Save();
+        
+        return movie;
+    }
 
-    public async Task<Movie?> UpdateAsync(Guid id, Movie? entity) => await _genericRepository.UpdateAsync(id, entity);
+    public async Task<Movie?> UpdateAsync(Guid id, Movie? entity)
+    {
+        var movie = await _unitOfWork.MovieRepository.UpdateAsync(id, entity);
+        _unitOfWork.Save();
+        
+        return movie;
+    }
 
-    public async Task DeleteAsync(Guid id) => await _genericRepository.DeleteAsync(id);
+    public async Task DeleteAsync(Guid id)
+    {
+        await _unitOfWork.MovieRepository.DeleteAsync(id);
+        _unitOfWork.Save();
+    }
 }

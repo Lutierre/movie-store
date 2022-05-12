@@ -14,10 +14,15 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         _context = context;
     }
 
-    public async Task<List<T>> GetAsync() => await _context.Set<T>().AsNoTracking().ToListAsync();
+    public async Task<List<T>> GetAsync() => await _context.Set<T>().ToListAsync();
 
     public async Task<T?> GetAsync(Guid id)
-        => await _context.Set<T>().AsNoTracking().Where(entity => entity.Id == id).FirstOrDefaultAsync();
+    {
+        Console.WriteLine("Inside GetAsync(id) method");
+        var res = await _context.Set<T>().FindAsync(id);
+        Console.WriteLine("Before returning");
+        return res;
+    }
 
     public async Task<T> CreateAsync(T entity)
     {
@@ -46,16 +51,13 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 
     public async Task DeleteAsync(Guid id)
     {
-        await Task.Run(()=>
-        {
-            var baseEntity = GetAsync(id).Result;
+        var baseEntity = await GetAsync(id);
 
-            if (baseEntity == null)
-            {
-                return null;
-            }
+        if (baseEntity == null)
+        {
+            return;
+        }
             
-            return _context.Set<T>().Remove(baseEntity);
-        });
+        _context.Set<T>().Remove(baseEntity);
     }
 }

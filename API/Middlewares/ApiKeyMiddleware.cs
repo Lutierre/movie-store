@@ -1,4 +1,4 @@
-﻿namespace UI.Middlewares;
+﻿namespace API.Middlewares;
 
 public class ApiKeyMiddleware
 {

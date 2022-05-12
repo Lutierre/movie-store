@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace UI.ActionFilters;
+namespace API.ActionFilters;
 
 public class TimerFilterAttribute : IActionFilter
 {

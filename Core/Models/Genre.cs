@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Core.ManyToMany;
+using Core.Models.Enums;
 
 namespace Core.Models;
 
 public class Genre : BaseEntity
 {
     [Required]
-    public Core.Models.Enums.Genre Code { get; set; }
+    public GenreCode Code { get; set; }
     
-    public List<Movie> Movies { get; set; }
+    public List<GenreMovie> GenreMovies { get; set; }
 }

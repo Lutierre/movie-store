@@ -1,6 +1,6 @@
 ﻿namespace Core.Models.Enums;
 
-public enum Genre
+public enum GenreCode
 {
     Action,
     Comedy,

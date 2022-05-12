@@ -1,14 +1,14 @@
+using API.ActionFilters;
 using BLL.Abstractions.Interfaces;
 using Core.Models;
 using Microsoft.AspNetCore.Mvc;
-using UI.ActionFilters;
 
 namespace API.Controllers;
 
 [ApiController]
 [ServiceFilter(typeof(TimerFilterAttribute))]
 [Route("Movies")]
-internal class MovieController : ControllerBase
+public class MovieController : ControllerBase
 {
     private readonly IService<Movie?> _movieService;
 
@@ -18,17 +18,17 @@ internal class MovieController : ControllerBase
     }
 
     [HttpPost]
-    public Movie? Post([FromBody] Movie? movie) => _movieService.CreateAsync(movie).Result;
+    public async Task<Movie> Post([FromBody] Movie? movie) => await _movieService.CreateAsync(movie);
 
     [HttpGet]
-    public IEnumerable<Movie?> Get() => _movieService.GetAsync().Result;
+    public async Task<List<Movie?>> Get() => await _movieService.GetAsync();
 
     [HttpGet("{id}")]
-    public Movie? Get(Guid id) => _movieService.GetAsync(id).Result;
+    public async Task<Movie> Get(Guid id) => await _movieService.GetAsync(id);
 
     [HttpPatch("{id}")]
-    public Movie? Patch([FromBody]Movie? movie, Guid id) => _movieService.UpdateAsync(id, movie).Result;
+    public async Task<Movie> Patch([FromBody]Movie? movie, Guid id) => await _movieService.UpdateAsync(id, movie);
 
     [HttpDelete("{id}")]
-    public void Delete(Guid id) => _movieService.DeleteAsync(id);
+    public async Task Delete(Guid id) => await _movieService.DeleteAsync(id);
 }
