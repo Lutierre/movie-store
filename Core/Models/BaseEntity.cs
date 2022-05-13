@@ -1,9 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace Core.Models;
 
-namespace Core.Models;
-
-public abstract class BaseEntity
+public class BaseEntity
 {
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
 }

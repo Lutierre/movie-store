@@ -26,4 +26,8 @@
       <ProjectReference Include="..\DAL.Abstractions\DAL.Abstractions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="DTO" />
+    </ItemGroup>
+
 </Project>

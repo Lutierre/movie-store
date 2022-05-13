@@ -1,8 +1,8 @@
-﻿using Core.Models;
+﻿using DTO;
 
 namespace DAL.Abstractions.Interfaces;
 
-public interface IGenericRepository<T> where T: BaseEntity
+public interface IGenericRepository<T> where T: BaseEntityDto
 {
     Task<List<T>> GetAsync();
     

@@ -1,6 +1,4 @@
-﻿using Core.ManyToMany;
-using Core.Models;
-using Core.Models.Enums;
+﻿using DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Context;
@@ -11,38 +9,23 @@ public class MovieStoreContext : DbContext
     {
     }
 
-    public DbSet<Movie> Movies => Set<Movie>();
+    public DbSet<MovieDto> Movies => Set<MovieDto>();
     
-    public DbSet<Director> Directors => Set<Director>();
+    public DbSet<DirectorDto> Directors => Set<DirectorDto>();
     
-    public DbSet<Comment> Comments => Set<Comment>();
+    public DbSet<CommentDto> Comments => Set<CommentDto>();
     
-    public DbSet<Genre> Genres => Set<Genre>();
-    
-    public DbSet<GenreMovie> GenreMovies => Set<GenreMovie>();
+    public DbSet<GenreDto> Genres => Set<GenreDto>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<GenreMovie>()
-            .HasKey(gm => new { gm.GenreId, gm.MovieId });
-        
-        // modelBuilder.Entity<GenreMovie>()
-        //     .HasOne(gm => gm.Genre)
-        //     .WithMany(g => g.GenreMovies)
-        //     .HasForeignKey(gm => gm.Movie);
-        //
-        // modelBuilder.Entity<GenreMovie>()
-        //     .HasOne(gm => gm.Movie)
-        //     .WithMany(m => m.GenreMovies)
-        //     .HasForeignKey(gm => gm.Genre);
-        
         modelBuilder
-            .Entity<Genre>()
+            .Entity<GenreDto>()
             .HasData(
-                new Genre { Id = Guid.NewGuid(), Code = GenreCode.Action },
-                new Genre { Id = Guid.NewGuid(), Code = GenreCode.Comedy },
-                new Genre { Id = Guid.NewGuid(), Code = GenreCode.Drama },
-                new Genre { Id = Guid.NewGuid(), Code = GenreCode.Misc }
+                new GenreDto { Id = Guid.NewGuid(), Code = 0, Name = "Action" },
+                new GenreDto { Id = Guid.NewGuid(), Code = 1, Name = "Comedy" },
+                new GenreDto { Id = Guid.NewGuid(), Code = 2, Name = "Drama" },
+                new GenreDto { Id = Guid.NewGuid(), Code = 3, Name = "Misc" }
             );
     }
 }

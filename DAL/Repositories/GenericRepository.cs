@@ -1,11 +1,11 @@
-﻿using Core.Models;
-using DAL.Abstractions.Interfaces;
+﻿using DAL.Abstractions.Interfaces;
 using DAL.Context;
+using DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
+public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntityDto
 {
     private readonly MovieStoreContext _context;
     
@@ -16,13 +16,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 
     public async Task<List<T>> GetAsync() => await _context.Set<T>().ToListAsync();
 
-    public async Task<T?> GetAsync(Guid id)
-    {
-        Console.WriteLine("Inside GetAsync(id) method");
-        var res = await _context.Set<T>().FindAsync(id);
-        Console.WriteLine("Before returning");
-        return res;
-    }
+    public async Task<T?> GetAsync(Guid id) => await _context.Set<T>().FindAsync(id);
 
     public async Task<T> CreateAsync(T entity)
     {
@@ -43,7 +37,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         {
             return existing;
         }
-        
+
+        entity.Id = id;
         _context.Entry(existing).CurrentValues.SetValues(entity);
 
         return existing;

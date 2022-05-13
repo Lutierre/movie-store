@@ -4,6 +4,7 @@ using DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MovieStoreContext))]
-    partial class MovieStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20220512154438_ChangeM2M")]
+    partial class ChangeM2M
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,22 +24,22 @@ namespace DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("DirectorDtoMovieDto", b =>
+            modelBuilder.Entity("Core.ManyToMany.GenreMovie", b =>
                 {
-                    b.Property<Guid>("DirectorsId")
+                    b.Property<Guid>("GenreId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MoviesId")
+                    b.Property<Guid>("MovieId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("DirectorsId", "MoviesId");
+                    b.HasKey("GenreId", "MovieId");
 
-                    b.HasIndex("MoviesId");
+                    b.HasIndex("MovieId");
 
-                    b.ToTable("DirectorDtoMovieDto");
+                    b.ToTable("GenreMovie");
                 });
 
-            modelBuilder.Entity("DTO.CommentDto", b =>
+            modelBuilder.Entity("Core.Models.Comment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,19 +56,17 @@ namespace DAL.Migrations
                     b.Property<Guid>("MovieId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ParentCommentId")
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MovieId");
 
-                    b.HasIndex("ParentCommentId");
-
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("DTO.DirectorDto", b =>
+            modelBuilder.Entity("Core.Models.Director", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace DAL.Migrations
                     b.ToTable("Directors");
                 });
 
-            modelBuilder.Entity("DTO.GenreDto", b =>
+            modelBuilder.Entity("Core.Models.Genre", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,10 +90,6 @@ namespace DAL.Migrations
                     b.Property<int>("Code")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
@@ -101,38 +97,33 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bdbf7b31-bb6c-4473-956a-e6c5eb9f6b61"),
-                            Code = 0,
-                            Name = "Action"
+                            Id = new Guid("53fd5734-6cf6-462f-aab8-622b8115c91b"),
+                            Code = 0
                         },
                         new
                         {
-                            Id = new Guid("22a80fd5-5995-47db-9725-0dd7c5f36599"),
-                            Code = 1,
-                            Name = "Comedy"
+                            Id = new Guid("adb2329e-5cdd-445d-9f67-54e1b3347331"),
+                            Code = 1
                         },
                         new
                         {
-                            Id = new Guid("80cb8496-01f1-4a27-a282-4173bfc843a6"),
-                            Code = 2,
-                            Name = "Drama"
+                            Id = new Guid("d3b128aa-2ca3-4205-a745-a2c25ac5d17f"),
+                            Code = 2
                         },
                         new
                         {
-                            Id = new Guid("b9fe70a8-ab17-4282-a169-f34e4585d174"),
-                            Code = 3,
-                            Name = "Misc"
+                            Id = new Guid("d73eee2f-9402-48e4-96d7-171cee95e4bb"),
+                            Code = 3
                         });
                 });
 
-            modelBuilder.Entity("DTO.MovieDto", b =>
+            modelBuilder.Entity("Core.Models.Movie", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ReleaseDate")
@@ -147,71 +138,74 @@ namespace DAL.Migrations
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("GenreDtoMovieDto", b =>
+            modelBuilder.Entity("DirectorMovie", b =>
                 {
-                    b.Property<Guid>("GenresId")
+                    b.Property<Guid>("DirectorsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MoviesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("GenresId", "MoviesId");
+                    b.HasKey("DirectorsId", "MoviesId");
 
                     b.HasIndex("MoviesId");
 
-                    b.ToTable("GenreDtoMovieDto");
+                    b.ToTable("DirectorMovie");
                 });
 
-            modelBuilder.Entity("DirectorDtoMovieDto", b =>
+            modelBuilder.Entity("Core.ManyToMany.GenreMovie", b =>
                 {
-                    b.HasOne("DTO.DirectorDto", null)
+                    b.HasOne("Core.Models.Genre", "Genre")
+                        .WithMany("GenreMovies")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Models.Movie", "Movie")
+                        .WithMany("GenreMovies")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("Core.Models.Comment", b =>
+                {
+                    b.HasOne("Core.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("DirectorMovie", b =>
+                {
+                    b.HasOne("Core.Models.Director", null)
                         .WithMany()
                         .HasForeignKey("DirectorsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DTO.MovieDto", null)
+                    b.HasOne("Core.Models.Movie", null)
                         .WithMany()
                         .HasForeignKey("MoviesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DTO.CommentDto", b =>
+            modelBuilder.Entity("Core.Models.Genre", b =>
                 {
-                    b.HasOne("DTO.MovieDto", "Movie")
-                        .WithMany("Comments")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DTO.CommentDto", "ParentComment")
-                        .WithMany()
-                        .HasForeignKey("ParentCommentId");
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("ParentComment");
+                    b.Navigation("GenreMovies");
                 });
 
-            modelBuilder.Entity("GenreDtoMovieDto", b =>
+            modelBuilder.Entity("Core.Models.Movie", b =>
                 {
-                    b.HasOne("DTO.GenreDto", null)
-                        .WithMany()
-                        .HasForeignKey("GenresId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DTO.MovieDto", null)
-                        .WithMany()
-                        .HasForeignKey("MoviesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DTO.MovieDto", b =>
-                {
-                    b.Navigation("Comments");
+                    b.Navigation("GenreMovies");
                 });
 #pragma warning restore 612, 618
         }
