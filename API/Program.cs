@@ -18,6 +18,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<TimerFilterAttribute>();
 builder.Services.AddScoped<IService<Movie>, MovieService>();
+builder.Services.AddScoped<IService<Director>, DirectorService>();
 builder.Services.AddScoped<UnitOfWork>();
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
