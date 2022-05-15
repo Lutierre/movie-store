@@ -11,8 +11,9 @@ public class UnitOfWork
     private readonly MovieStoreContext _context;
     private IRepository<CommentDto>? _commentRepository;
     private IRepository<DirectorDto>? _directorRepository;
-    private IRepository<MovieDto>? _movieRepository;
-
+    private MovieRepository? _movieRepository;
+    private GenreRepository? _genreRepository;
+    
     public UnitOfWork(MovieStoreContext context)
     {
         _context = context;
@@ -25,7 +26,9 @@ public class UnitOfWork
         _directorRepository ??= new GenericRepository<DirectorDto>(_context);
 
     public IRepository<MovieDto> MovieRepository 
-        => _movieRepository ??= new GenericRepository<MovieDto>(_context);
+        => _movieRepository ??= new MovieRepository(_context);
+
+    public GenreRepository GenreRepository => _genreRepository ??= new GenreRepository(_context);
 
     public async Task Save() => await _context.SaveChangesAsync();
 }

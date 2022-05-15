@@ -5,7 +5,9 @@ using BLL.MappingProfiles;
 using BLL.Services;
 using Core.Models;
 using DAL;
+using DAL.Abstractions.Interfaces;
 using DAL.Context;
+using DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 
@@ -20,6 +22,8 @@ builder.Services.AddScoped<TimerFilterAttribute>();
 builder.Services.AddScoped<IService<Movie>, MovieService>();
 builder.Services.AddScoped<IService<Director>, DirectorService>();
 builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<GenreRepository>();
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
