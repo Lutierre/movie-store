@@ -2,8 +2,8 @@
 
 public enum GenreCode
 {
-    Action,
-    Comedy,
-    Drama,
-    Misc
+    Action = 1,
+    Comedy = 2,
+    Drama = 3,
+    Misc = 4
 }

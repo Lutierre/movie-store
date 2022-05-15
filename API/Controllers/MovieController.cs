@@ -18,7 +18,7 @@ public class MovieController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<Movie> Post([FromBody] Movie? movie) => await _movieService.CreateAsync(movie);
+    public async Task<Movie> Post([FromBody]Movie? movie) => await _movieService.CreateAsync(movie);
 
     [HttpGet]
     public async Task<List<Movie?>> Get() => await _movieService.GetAsync();

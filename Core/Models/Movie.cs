@@ -10,7 +10,7 @@ public class Movie : BaseEntity
     
     public DateTime ReleaseDate { get; set; }
     
-    public List<Director> Directors { get; set; }
+    public List<string> Directors { get; set; }
     
     public List<GenreCode> Genres { get; set; }
     

@@ -6,7 +6,7 @@ public class Comment : BaseEntity
     
     public string Body { get; set; }
     
-    public Movie Movie { get; set; }
+    public Guid MovieId { get; set; }
 
-    public Comment? ParentComment { get; set; } = null;
+    public Guid? ParentCommentId { get; set; } = null;
 }

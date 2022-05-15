@@ -1,5 +1,4 @@
-﻿using Core.Models;
-using DAL.Abstractions.Interfaces;
+﻿using DAL.Abstractions.Interfaces;
 using DAL.Context;
 using DAL.Repositories;
 using DTO.Entities;
