@@ -11,6 +11,7 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<MovieDto, Movie>().ReverseMap();
+        CreateMap<DirectorDto, Director>().ReverseMap();
 
         CreateMap<Guid, CommentDto>().ConvertUsing<GuidModelConverter<CommentDto>>();
         CreateMap<Guid, MovieDto>().ConvertUsing<GuidModelConverter<MovieDto>>();
@@ -19,9 +20,11 @@ public class MappingProfile : Profile
         CreateMap<DirectorDto, string>().ConvertUsing<DirectorDtoModelConverter>();
         CreateMap<string, DirectorDto>().ConvertUsing<DirectorModelConverter>();
 
-        CreateMap<Comment, CommentDto>().ForMember
-            (dm => dm.Movie, opt => opt.MapFrom(src => src.MovieId));
-        CreateMap<CommentDto, Comment>().ForMember
-            (dm => dm.MovieId, opt => opt.MapFrom(src => src.Movie.Id));
+        CreateMap<Comment, CommentDto>()
+            .ForMember(dm => dm.Movie, opt => opt.MapFrom(src => src.MovieId))
+            .ForMember(dm => dm.ParentComment, opt => opt.MapFrom(src => src.ParentCommentId));
+        CreateMap<CommentDto, Comment>()
+            .ForMember(dm => dm.MovieId, opt => opt.MapFrom(src => src.Movie.Id))
+            .ForMember(dm => dm.ParentCommentId, opt => opt.MapFrom(src => src.ParentComment!.Id));
     }
 }
