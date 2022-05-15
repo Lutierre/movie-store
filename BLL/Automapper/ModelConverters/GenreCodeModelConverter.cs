@@ -5,7 +5,7 @@ using DTO.Entities;
 
 namespace BLL.Automapper.ModelConverters;
 
-public class GenreCodeModelConverter : ITypeConverter<GenreCode, GenreDto>
+internal class GenreCodeModelConverter : ITypeConverter<GenreCode, GenreDto>
 {
     private readonly UnitOfWork _unitOfWork;
 

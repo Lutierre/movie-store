@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories;
 
-public class MovieRepository : IRepository<MovieDto>
+internal class MovieRepository : IRepository<MovieDto>
 {
     private readonly MovieStoreContext _context;
     private readonly IRepository<MovieDto> _wrappeeMovieRepository;
@@ -54,13 +54,13 @@ public class MovieRepository : IRepository<MovieDto>
         entity.Id = id;
         _context.Entry(existing).CurrentValues.SetValues(entity);
 
-        await UpdateRelated(existing.Genres, entity.Genres);
-        await UpdateRelated(existing.Directors, entity.Directors);
+        UpdateRelated(existing.Genres, entity.Genres);
+        UpdateRelated(existing.Directors, entity.Directors);
 
         return existing;
     }
 
-    private async Task UpdateRelated<T>(List<T> existingDtos, List<T> newDtos) where T : BaseEntityDto
+    private void UpdateRelated<T>(List<T>? existingDtos, List<T>? newDtos) where T : BaseEntityDto
     {
         foreach (var entityDto in existingDtos.ToList())
         {

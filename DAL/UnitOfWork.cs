@@ -27,7 +27,7 @@ public class UnitOfWork
     public IRepository<MovieDto> MovieRepository 
         => _movieRepository ??= new MovieRepository(_context);
 
-    public GenreRepository GenreRepository => _genreRepository ??= new GenreRepository(_context);
+    public IGenreRepository GenreRepository => _genreRepository ??= new GenreRepository(_context);
 
     public async Task Save() => await _context.SaveChangesAsync();
 }

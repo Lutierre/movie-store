@@ -8,20 +8,20 @@ namespace DAL.Repositories;
 
 public class GenericRepository<T> : IRepository<T> where T : BaseEntityDto
 {
-    protected readonly MovieStoreContext _context;
+    protected readonly MovieStoreContext Context;
     
     public GenericRepository(MovieStoreContext context)
     {
-        _context = context;
+        Context = context;
     }
 
-    public async Task<List<T>> GetAsync() => await _context.Set<T>().ToListAsync();
+    public async Task<List<T>> GetAsync() => await Context.Set<T>().ToListAsync();
 
-    public async Task<T?> GetAsync(Guid id) => await _context.Set<T>().FindAsync(id);
+    public async Task<T?> GetAsync(Guid id) => await Context.Set<T>().FindAsync(id);
 
     public async Task<T> CreateAsync(T entity)
     {
-        await _context.Set<T>().AddAsync(entity);
+        await Context.Set<T>().AddAsync(entity);
         return entity;
     }
 
@@ -32,7 +32,7 @@ public class GenericRepository<T> : IRepository<T> where T : BaseEntityDto
             return null;
         }
         
-        var existing = await _context.Set<T>().FindAsync(id);
+        var existing = await Context.Set<T>().FindAsync(id);
 
         if (existing == null)
         {
@@ -40,7 +40,7 @@ public class GenericRepository<T> : IRepository<T> where T : BaseEntityDto
         }
 
         entity.Id = id;
-        _context.Entry(existing).CurrentValues.SetValues(entity);
+        Context.Entry(existing).CurrentValues.SetValues(entity);
 
         return existing;
     }
@@ -54,9 +54,9 @@ public class GenericRepository<T> : IRepository<T> where T : BaseEntityDto
             return;
         }
             
-        _context.Set<T>().Remove(baseEntity);
+        Context.Set<T>().Remove(baseEntity);
     }
 
     public async Task<T?> GetFilteredAsync(Expression<Func<T, bool>> predicate)
-        => await _context.Set<T>().SingleOrDefaultAsync(predicate);
+        => await Context.Set<T>().SingleOrDefaultAsync(predicate);
 }

@@ -4,7 +4,7 @@ using DTO.Entities;
 
 namespace BLL.Automapper.ModelConverters;
 
-public class GuidModelConverter<T> : ITypeConverter<Guid, T> where T: BaseEntityDto
+internal class GuidModelConverter<T> : ITypeConverter<Guid, T> where T: BaseEntityDto
 {
     private readonly IRepository<T> _repository;
 

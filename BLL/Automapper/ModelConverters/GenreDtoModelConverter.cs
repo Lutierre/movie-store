@@ -4,7 +4,7 @@ using DTO.Entities;
 
 namespace BLL.Automapper.ModelConverters;
 
-public class GenreDtoModelConverter : ITypeConverter<GenreDto, GenreCode>
+internal class GenreDtoModelConverter : ITypeConverter<GenreDto, GenreCode>
 {
     public GenreCode Convert(GenreDto source, GenreCode destination, ResolutionContext context) 
         => (GenreCode)source.Code;

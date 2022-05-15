@@ -4,7 +4,7 @@ using DTO.Entities;
 
 namespace BLL.Automapper.ModelConverters;
 
-public class DirectorModelConverter : ITypeConverter<string, DirectorDto>
+internal class DirectorModelConverter : ITypeConverter<string, DirectorDto>
 {
     private readonly UnitOfWork _unitOfWork;
 

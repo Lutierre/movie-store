@@ -10,9 +10,9 @@ namespace API.Controllers;
 [Route("Directors")]
 public class DirectorController : ControllerBase
 {
-    private readonly IService<Director?> _directorService;
+    private readonly IService<Director> _directorService;
 
-    public DirectorController(IService<Director?> directorService)
+    public DirectorController(IService<Director> directorService)
     {
         _directorService = directorService;
     }

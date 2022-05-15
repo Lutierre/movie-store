@@ -4,7 +4,7 @@ using DAL;
 
 namespace BLL.Automapper.ModelConverters;
 
-public class StringDirectorModelConverter : ITypeConverter<string, Director>
+internal class StringDirectorModelConverter : ITypeConverter<string, Director>
 {
     private readonly UnitOfWork _unitOfWork;
     private readonly IMapper _mapper;

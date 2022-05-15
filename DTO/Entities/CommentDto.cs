@@ -4,14 +4,14 @@ namespace DTO.Entities
 {
     public class CommentDto : BaseEntityDto
     {
-        public string Author { get; set; }
+        public string? Author { get; set; }
     
-        public string Body { get; set; }
+        public string? Body { get; set; }
     
         [ForeignKey("MovieId")]
-        public MovieDto Movie { get; set; }
+        public MovieDto? Movie { get; set; }
 
         [ForeignKey("ParentCommentId")]
-        public CommentDto? ParentComment { get; set; } = null;
+        public CommentDto? ParentComment { get; set; }
     }
 }
