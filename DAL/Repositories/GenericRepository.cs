@@ -1,13 +1,14 @@
-﻿using DAL.Abstractions.Interfaces;
+﻿using System.Linq.Expressions;
+using DAL.Abstractions.Interfaces;
 using DAL.Context;
 using DTO.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntityDto
+public class GenericRepository<T> : IRepository<T> where T : BaseEntityDto
 {
-    private readonly MovieStoreContext _context;
+    protected readonly MovieStoreContext _context;
     
     public GenericRepository(MovieStoreContext context)
     {
@@ -55,4 +56,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntityDt
             
         _context.Set<T>().Remove(baseEntity);
     }
+
+    public async Task<T?> GetFilteredAsync(Expression<Func<T, bool>> predicate)
+        => await _context.Set<T>().SingleOrDefaultAsync(predicate);
 }

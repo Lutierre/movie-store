@@ -3,7 +3,7 @@ using DTO.Entities;
 
 namespace DAL.Abstractions.Interfaces;
 
-public interface IGenericRepository<T> where T: BaseEntityDto
+public interface IRepository<T> where T: BaseEntityDto
 {
     Task<List<T>> GetAsync();
     
@@ -14,4 +14,6 @@ public interface IGenericRepository<T> where T: BaseEntityDto
     Task<T?> UpdateAsync(Guid id, T? entity);
     
     Task DeleteAsync(Guid id);
+
+    Task<T?> GetFilteredAsync(Expression<Func<T,bool>> predicate);
 }

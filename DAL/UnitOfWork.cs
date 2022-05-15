@@ -9,22 +9,22 @@ namespace DAL;
 public class UnitOfWork
 {
     private readonly MovieStoreContext _context;
-    private IGenericRepository<CommentDto>? _commentRepository;
-    private IGenericRepository<DirectorDto>? _directorRepository;
-    private IGenericRepository<MovieDto>? _movieRepository;
+    private IRepository<CommentDto>? _commentRepository;
+    private IRepository<DirectorDto>? _directorRepository;
+    private IRepository<MovieDto>? _movieRepository;
 
     public UnitOfWork(MovieStoreContext context)
     {
         _context = context;
     }
 
-    public IGenericRepository<CommentDto> CommentRepository => 
+    public IRepository<CommentDto> CommentRepository => 
         _commentRepository ??= new GenericRepository<CommentDto>(_context);
 
-    public IGenericRepository<DirectorDto> DirectorRepository => 
+    public IRepository<DirectorDto> DirectorRepository => 
         _directorRepository ??= new GenericRepository<DirectorDto>(_context);
 
-    public IGenericRepository<MovieDto> MovieRepository 
+    public IRepository<MovieDto> MovieRepository 
         => _movieRepository ??= new GenericRepository<MovieDto>(_context);
 
     public async Task Save() => await _context.SaveChangesAsync();
