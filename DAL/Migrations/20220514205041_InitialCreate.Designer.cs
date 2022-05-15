@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MovieStoreContext))]
-    [Migration("20220512204810_Magic")]
-    partial class Magic
+    [Migration("20220514205041_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,7 +39,7 @@ namespace DAL.Migrations
                     b.ToTable("DirectorDtoMovieDto");
                 });
 
-            modelBuilder.Entity("DTO.CommentDto", b =>
+            modelBuilder.Entity("DTO.Entities.CommentDto", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,7 +68,7 @@ namespace DAL.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("DTO.DirectorDto", b =>
+            modelBuilder.Entity("DTO.Entities.DirectorDto", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,7 +83,7 @@ namespace DAL.Migrations
                     b.ToTable("Directors");
                 });
 
-            modelBuilder.Entity("DTO.GenreDto", b =>
+            modelBuilder.Entity("DTO.Entities.GenreDto", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,31 +103,31 @@ namespace DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bdbf7b31-bb6c-4473-956a-e6c5eb9f6b61"),
-                            Code = 0,
+                            Id = new Guid("ad177ab5-e43b-4070-8a30-2ca9d929c025"),
+                            Code = 1,
                             Name = "Action"
                         },
                         new
                         {
-                            Id = new Guid("22a80fd5-5995-47db-9725-0dd7c5f36599"),
-                            Code = 1,
+                            Id = new Guid("519163b2-8e11-4c61-9b11-5e88bf98a2ed"),
+                            Code = 2,
                             Name = "Comedy"
                         },
                         new
                         {
-                            Id = new Guid("80cb8496-01f1-4a27-a282-4173bfc843a6"),
-                            Code = 2,
+                            Id = new Guid("8d90e4a3-c819-4fdd-99be-95f8bc9a422c"),
+                            Code = 3,
                             Name = "Drama"
                         },
                         new
                         {
-                            Id = new Guid("b9fe70a8-ab17-4282-a169-f34e4585d174"),
-                            Code = 3,
+                            Id = new Guid("e294e90c-429c-4d95-85b5-a764c0cf4978"),
+                            Code = 4,
                             Name = "Misc"
                         });
                 });
 
-            modelBuilder.Entity("DTO.MovieDto", b =>
+            modelBuilder.Entity("DTO.Entities.MovieDto", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -166,28 +166,28 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DirectorDtoMovieDto", b =>
                 {
-                    b.HasOne("DTO.DirectorDto", null)
+                    b.HasOne("DTO.Entities.DirectorDto", null)
                         .WithMany()
                         .HasForeignKey("DirectorsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DTO.MovieDto", null)
+                    b.HasOne("DTO.Entities.MovieDto", null)
                         .WithMany()
                         .HasForeignKey("MoviesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DTO.CommentDto", b =>
+            modelBuilder.Entity("DTO.Entities.CommentDto", b =>
                 {
-                    b.HasOne("DTO.MovieDto", "Movie")
+                    b.HasOne("DTO.Entities.MovieDto", "Movie")
                         .WithMany("Comments")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DTO.CommentDto", "ParentComment")
+                    b.HasOne("DTO.Entities.CommentDto", "ParentComment")
                         .WithMany()
                         .HasForeignKey("ParentCommentId");
 
@@ -198,20 +198,20 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("GenreDtoMovieDto", b =>
                 {
-                    b.HasOne("DTO.GenreDto", null)
+                    b.HasOne("DTO.Entities.GenreDto", null)
                         .WithMany()
                         .HasForeignKey("GenresId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DTO.MovieDto", null)
+                    b.HasOne("DTO.Entities.MovieDto", null)
                         .WithMany()
                         .HasForeignKey("MoviesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DTO.MovieDto", b =>
+            modelBuilder.Entity("DTO.Entities.MovieDto", b =>
                 {
                     b.Navigation("Comments");
                 });

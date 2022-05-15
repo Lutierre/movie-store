@@ -26,7 +26,8 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,7 +40,7 @@ namespace DAL.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -55,11 +56,16 @@ namespace DAL.Migrations
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MovieId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ParentCommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_Comments_ParentCommentId",
+                        column: x => x.ParentCommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Comments_Movies_MovieId",
                         column: x => x.MovieId,
@@ -69,7 +75,7 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DirectorMovie",
+                name: "DirectorDtoMovieDto",
                 columns: table => new
                 {
                     DirectorsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -77,15 +83,15 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DirectorMovie", x => new { x.DirectorsId, x.MoviesId });
+                    table.PrimaryKey("PK_DirectorDtoMovieDto", x => new { x.DirectorsId, x.MoviesId });
                     table.ForeignKey(
-                        name: "FK_DirectorMovie_Directors_DirectorsId",
+                        name: "FK_DirectorDtoMovieDto_Directors_DirectorsId",
                         column: x => x.DirectorsId,
                         principalTable: "Directors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DirectorMovie_Movies_MoviesId",
+                        name: "FK_DirectorDtoMovieDto_Movies_MoviesId",
                         column: x => x.MoviesId,
                         principalTable: "Movies",
                         principalColumn: "Id",
@@ -93,7 +99,7 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GenreMovie",
+                name: "GenreDtoMovieDto",
                 columns: table => new
                 {
                     GenresId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -101,19 +107,30 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GenreMovie", x => new { x.GenresId, x.MoviesId });
+                    table.PrimaryKey("PK_GenreDtoMovieDto", x => new { x.GenresId, x.MoviesId });
                     table.ForeignKey(
-                        name: "FK_GenreMovie_Genres_GenresId",
+                        name: "FK_GenreDtoMovieDto_Genres_GenresId",
                         column: x => x.GenresId,
                         principalTable: "Genres",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GenreMovie_Movies_MoviesId",
+                        name: "FK_GenreDtoMovieDto_Movies_MoviesId",
                         column: x => x.MoviesId,
                         principalTable: "Movies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Genres",
+                columns: new[] { "Id", "Code", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("519163b2-8e11-4c61-9b11-5e88bf98a2ed"), 2, "Comedy" },
+                    { new Guid("8d90e4a3-c819-4fdd-99be-95f8bc9a422c"), 3, "Drama" },
+                    { new Guid("ad177ab5-e43b-4070-8a30-2ca9d929c025"), 1, "Action" },
+                    { new Guid("e294e90c-429c-4d95-85b5-a764c0cf4978"), 4, "Misc" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -122,13 +139,18 @@ namespace DAL.Migrations
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DirectorMovie_MoviesId",
-                table: "DirectorMovie",
+                name: "IX_Comments_ParentCommentId",
+                table: "Comments",
+                column: "ParentCommentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DirectorDtoMovieDto_MoviesId",
+                table: "DirectorDtoMovieDto",
                 column: "MoviesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GenreMovie_MoviesId",
-                table: "GenreMovie",
+                name: "IX_GenreDtoMovieDto_MoviesId",
+                table: "GenreDtoMovieDto",
                 column: "MoviesId");
         }
 
@@ -138,10 +160,10 @@ namespace DAL.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "DirectorMovie");
+                name: "DirectorDtoMovieDto");
 
             migrationBuilder.DropTable(
-                name: "GenreMovie");
+                name: "GenreDtoMovieDto");
 
             migrationBuilder.DropTable(
                 name: "Directors");
