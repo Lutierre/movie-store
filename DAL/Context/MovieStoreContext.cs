@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using Core.Models.Enums;
+using DTO.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Context;

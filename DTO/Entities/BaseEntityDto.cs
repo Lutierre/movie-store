@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DTO;
+namespace DTO.Entities;
 
 public abstract class BaseEntityDto
 {

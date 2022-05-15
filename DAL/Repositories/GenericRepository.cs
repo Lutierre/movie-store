@@ -1,6 +1,6 @@
 ﻿using DAL.Abstractions.Interfaces;
 using DAL.Context;
-using DTO;
+using DTO.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories;

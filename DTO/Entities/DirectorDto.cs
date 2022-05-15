@@ -1,4 +1,4 @@
-﻿namespace DTO
+﻿namespace DTO.Entities
 {
     public class DirectorDto : BaseEntityDto
     {

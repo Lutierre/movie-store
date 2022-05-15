@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DTO;
+namespace DTO.Entities;
 
 public class MovieDto : BaseEntityDto
 {

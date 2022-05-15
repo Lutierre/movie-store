@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using System.Linq.Expressions;
+using DTO.Entities;
 
 namespace DAL.Abstractions.Interfaces;
 

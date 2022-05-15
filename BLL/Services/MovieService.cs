@@ -2,7 +2,7 @@
 using BLL.Abstractions.Interfaces;
 using Core.Models;
 using DAL;
-using DTO;
+using DTO.Entities;
 
 namespace BLL.Services;
 
