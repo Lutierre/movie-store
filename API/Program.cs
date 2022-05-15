@@ -21,6 +21,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddScoped<TimerFilterAttribute>();
 builder.Services.AddScoped<IService<Movie>, MovieService>();
 builder.Services.AddScoped<IService<Director>, DirectorService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<UnitOfWork>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<GenreRepository>();
