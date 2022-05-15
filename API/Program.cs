@@ -1,7 +1,7 @@
 using API.ActionFilters;
 using API.Middlewares;
 using BLL.Abstractions.Interfaces;
-using BLL.MappingProfiles;
+using BLL.Automapper.MappingProfiles;
 using BLL.Services;
 using Core.Models;
 using DAL;
