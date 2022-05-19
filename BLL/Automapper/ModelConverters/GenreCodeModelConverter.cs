@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Core.Models.Enums;
 using DAL;
-using DTO.Entities;
+using Entities;
 
 namespace BLL.Automapper.ModelConverters;
 
-internal class GenreCodeModelConverter : ITypeConverter<GenreCode, GenreDto>
+internal class GenreCodeModelConverter : ITypeConverter<GenreCode, Genre>
 {
     private readonly UnitOfWork _unitOfWork;
 
@@ -14,6 +14,6 @@ internal class GenreCodeModelConverter : ITypeConverter<GenreCode, GenreDto>
         _unitOfWork = unitOfWork;
     }
 
-    public GenreDto? Convert(GenreCode source, GenreDto destination, ResolutionContext context)
+    public Genre? Convert(GenreCode source, Genre destination, ResolutionContext context)
         => _unitOfWork.GenreRepository.GetByCodeAsync(source).Result;
 }

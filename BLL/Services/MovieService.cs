@@ -2,11 +2,11 @@
 using BLL.Abstractions.Interfaces;
 using Core.Models;
 using DAL;
-using DTO.Entities;
+using Entities;
 
 namespace BLL.Services;
 
-public class MovieService : IService<Movie>
+public class MovieService : IService<MovieModel>
 {
     private readonly UnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -17,40 +17,40 @@ public class MovieService : IService<Movie>
         _mapper = mapper;
     }
 
-    public async Task<List<Movie>> GetAsync()
+    public async Task<List<MovieModel>> GetAsync()
     {
         var moviesDtos = await _unitOfWork.MovieRepository.GetAsync();
-        var movies = moviesDtos.Select(dto => _mapper.Map<Movie>(dto)).ToList();
+        var movies = moviesDtos.Select(dto => _mapper.Map<MovieModel>(dto)).ToList();
 
         return movies;
     }
 
-    public async Task<Movie?> GetAsync(Guid id) 
+    public async Task<MovieModel?> GetAsync(Guid id) 
     {
         var movieDto = await _unitOfWork.MovieRepository.GetAsync(id);
-        var movie = _mapper.Map<Movie>(movieDto);
+        var movie = _mapper.Map<MovieModel>(movieDto);
 
         return movie;
     }
 
-    public async Task<Movie> CreateAsync(Movie entity)
+    public async Task<MovieModel> CreateAsync(MovieModel entity)
     {
-        var movieDto = _mapper.Map<MovieDto>(entity);
+        var movieDto = _mapper.Map<Movie>(entity);
         movieDto = await _unitOfWork.MovieRepository.CreateAsync(movieDto);
-        await _unitOfWork.Save();
+        await _unitOfWork.SaveAsync();
 
-        var movie = _mapper.Map<Movie>(movieDto);
+        var movie = _mapper.Map<MovieModel>(movieDto);
         
         return movie;
     }
 
-    public async Task<Movie?> UpdateAsync(Guid id, Movie? entity)
+    public async Task<MovieModel?> UpdateAsync(Guid id, MovieModel? entity)
     {
-        var movieDto = _mapper.Map<MovieDto>(entity);
+        var movieDto = _mapper.Map<Movie>(entity);
         movieDto = await _unitOfWork.MovieRepository.UpdateAsync(id, movieDto);
-        await _unitOfWork.Save();
+        await _unitOfWork.SaveAsync();
         
-        var movie = _mapper.Map<Movie>(movieDto);
+        var movie = _mapper.Map<MovieModel>(movieDto);
         
         return movie;
     }
@@ -58,6 +58,6 @@ public class MovieService : IService<Movie>
     public async Task DeleteAsync(Guid id)
     {
         await _unitOfWork.MovieRepository.DeleteAsync(id);
-        await _unitOfWork.Save();
+        await _unitOfWork.SaveAsync();
     }
 }

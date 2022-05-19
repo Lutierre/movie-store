@@ -10,13 +10,13 @@ namespace API.Controllers;
 [Route("Directors")]
 public class DirectorController : ControllerBase
 {
-    private readonly IService<Director> _directorService;
+    private readonly IService<DirectorModel> _directorService;
 
-    public DirectorController(IService<Director> directorService)
+    public DirectorController(IService<DirectorModel> directorService)
     {
         _directorService = directorService;
     }
     
     [HttpPost]
-    public async Task<Director> Post([FromBody] Director? director) => await _directorService.CreateAsync(director);
+    public async Task<DirectorModel> Post([FromBody] DirectorModel? director) => await _directorService.CreateAsync(director);
 }

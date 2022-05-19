@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DTO.Entities;
+namespace Entities;
 
-public class MovieDto : BaseEntityDto
+public class Movie : BaseEntity
 {
     public string? Title { get; set; }
 
@@ -11,9 +11,9 @@ public class MovieDto : BaseEntityDto
     [DataType(DataType.Date)]
     public DateTime ReleaseDate { get; set; }
     
-    public List<DirectorDto>? Directors { get; set; }
+    public List<Director>? Directors { get; set; }
     
-    public List<GenreDto>? Genres { get; set; }
+    public List<Genre>? Genres { get; set; }
     
-    public List<CommentDto>? Comments { get; set; }
+    public List<Comment>? Comments { get; set; }
 }

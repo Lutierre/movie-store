@@ -4,7 +4,7 @@ using DAL;
 
 namespace BLL.Automapper.ModelConverters;
 
-internal class StringDirectorModelConverter : ITypeConverter<string, Director>
+internal class StringDirectorModelConverter : ITypeConverter<string, DirectorModel>
 {
     private readonly UnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -15,6 +15,6 @@ internal class StringDirectorModelConverter : ITypeConverter<string, Director>
         _unitOfWork = unitOfWork;
     }
 
-    public Director Convert(string source, Director destination, ResolutionContext context) 
-        => _mapper.Map<Director>(_unitOfWork.DirectorRepository.GetFilteredAsync(dto => dto.FullName == source).Result);
+    public DirectorModel Convert(string source, DirectorModel destination, ResolutionContext context) 
+        => _mapper.Map<DirectorModel>(_unitOfWork.DirectorRepository.GetFilteredAsync(dto => dto.FullName == source).Result);
 }

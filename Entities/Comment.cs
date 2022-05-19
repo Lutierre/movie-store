@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DTO.Entities
+namespace Entities
 {
-    public class CommentDto : BaseEntityDto
+    public class Comment : BaseEntity
     {
         public string? Author { get; set; }
     
         public string? Body { get; set; }
     
         [ForeignKey("MovieId")]
-        public MovieDto? Movie { get; set; }
+        public Movie? Movie { get; set; }
 
         [ForeignKey("ParentCommentId")]
-        public CommentDto? ParentComment { get; set; }
+        public Comment? ParentComment { get; set; }
     }
 }

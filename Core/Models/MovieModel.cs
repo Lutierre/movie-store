@@ -2,7 +2,7 @@
 
 namespace Core.Models;
 
-public class Movie : BaseEntity
+public class MovieModel : BaseModel
 {
     public string? Title { get; set; }
 
@@ -14,5 +14,5 @@ public class Movie : BaseEntity
     
     public List<GenreCode>? Genres { get; set; }
     
-    public List<Comment>? Comments { get; set; }
+    public List<CommentModel>? Comments { get; set; }
 }

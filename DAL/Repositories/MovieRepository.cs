@@ -1,46 +1,46 @@
 ﻿using System.Linq.Expressions;
 using DAL.Abstractions.Interfaces;
 using DAL.Context;
-using DTO.Entities;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories;
 
-internal class MovieRepository : IRepository<MovieDto>
+internal class MovieRepository : IRepository<Movie>
 {
     private readonly MovieStoreContext _context;
-    private readonly IRepository<MovieDto> _wrappeeMovieRepository;
+    private readonly IRepository<Movie> _wrappeeMovieRepository;
 
     public MovieRepository(MovieStoreContext context)
     {
         _context = context;
-        _wrappeeMovieRepository = new GenericRepository<MovieDto>(context);
+        _wrappeeMovieRepository = new GenericRepository<Movie>(context);
     }
 
-    public async Task<List<MovieDto>> GetAsync() => await _context.Set<MovieDto>()
+    public async Task<List<Movie>> GetAsync() => await _context.Set<Movie>()
         .Include(dto => dto.Comments)
         .Include(dto => dto.Directors)
         .Include(dto => dto.Genres)
         .ToListAsync();
 
-    public async Task<MovieDto?> GetAsync(Guid id) => await _context.Set<MovieDto>()
+    public async Task<Movie?> GetAsync(Guid id) => await _context.Set<Movie>()
         .Include(dto => dto.Comments)
         .Include(dto => dto.Directors)
         .Include(dto => dto.Genres)
         .SingleOrDefaultAsync(dto => dto.Id == id);
 
-    public async Task<MovieDto> CreateAsync(MovieDto entity) => await _wrappeeMovieRepository.CreateAsync(entity);
+    public async Task<Movie> CreateAsync(Movie entity) => await _wrappeeMovieRepository.CreateAsync(entity);
 
     public async Task DeleteAsync(Guid id) => await _wrappeeMovieRepository.DeleteAsync(id);
     
-    public async Task<MovieDto?> UpdateAsync(Guid id, MovieDto? entity)
+    public async Task<Movie?> UpdateAsync(Guid id, Movie? entity)
     {
         if (entity == null)
         {
             return null;
         }
         
-        var existing = await _context.Set<MovieDto>()
+        var existing = await _context.Set<Movie>()
             .Include(dto => dto.Comments)
             .Include(dto => dto.Directors)
             .Include(dto => dto.Genres)
@@ -60,7 +60,7 @@ internal class MovieRepository : IRepository<MovieDto>
         return existing;
     }
 
-    private void UpdateRelated<T>(List<T>? existingDtos, List<T>? newDtos) where T : BaseEntityDto
+    private void UpdateRelated<T>(List<T>? existingDtos, List<T>? newDtos) where T : BaseEntity
     {
         foreach (var entityDto in existingDtos.ToList())
         {
@@ -81,7 +81,7 @@ internal class MovieRepository : IRepository<MovieDto>
         }
     }
 
-    public Task<MovieDto?> GetFilteredAsync(Expression<Func<MovieDto, bool>> predicate)
+    public Task<Movie?> GetFilteredAsync(Expression<Func<Movie, bool>> predicate)
     {
         throw new NotImplementedException();
     }

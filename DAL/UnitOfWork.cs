@@ -1,15 +1,15 @@
 ﻿using DAL.Abstractions.Interfaces;
 using DAL.Context;
 using DAL.Repositories;
-using DTO.Entities;
+using Entities;
 
 namespace DAL;
 
 public class UnitOfWork
 {
     private readonly MovieStoreContext _context;
-    private IRepository<CommentDto>? _commentRepository;
-    private IRepository<DirectorDto>? _directorRepository;
+    private IRepository<Comment>? _commentRepository;
+    private IRepository<Director>? _directorRepository;
     private MovieRepository? _movieRepository;
     private GenreRepository? _genreRepository;
     
@@ -18,16 +18,16 @@ public class UnitOfWork
         _context = context;
     }
 
-    public IRepository<CommentDto> CommentRepository => 
-        _commentRepository ??= new GenericRepository<CommentDto>(_context);
+    public IRepository<Comment> CommentRepository => 
+        _commentRepository ??= new GenericRepository<Comment>(_context);
 
-    public IRepository<DirectorDto> DirectorRepository => 
-        _directorRepository ??= new GenericRepository<DirectorDto>(_context);
+    public IRepository<Director> DirectorRepository => 
+        _directorRepository ??= new GenericRepository<Director>(_context);
 
-    public IRepository<MovieDto> MovieRepository 
+    public IRepository<Movie> MovieRepository 
         => _movieRepository ??= new MovieRepository(_context);
 
     public IGenreRepository GenreRepository => _genreRepository ??= new GenreRepository(_context);
 
-    public async Task Save() => await _context.SaveChangesAsync();
+    public async Task SaveAsync() => await _context.SaveChangesAsync();
 }

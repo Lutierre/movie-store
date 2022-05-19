@@ -2,7 +2,7 @@
 
 namespace BLL.Abstractions.Interfaces;
 
-public interface ICommentService : IService<Comment>
+public interface ICommentService : IService<CommentModel>
 {
-    Task<List<Comment>> GetByMovieAsync(Guid movieId);
+    Task<List<CommentModel>> GetByMovieAsync(Guid movieId);
 }

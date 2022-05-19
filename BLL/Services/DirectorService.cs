@@ -2,11 +2,11 @@
 using BLL.Abstractions.Interfaces;
 using Core.Models;
 using DAL;
-using DTO.Entities;
+using Entities;
 
 namespace BLL.Services;
 
-public class DirectorService : IService<Director>
+public class DirectorService : IService<DirectorModel>
 {
     private readonly UnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
@@ -17,28 +17,28 @@ public class DirectorService : IService<Director>
         _mapper = mapper;
     }
 
-    public async Task<Director> CreateAsync(Director entity)
+    public async Task<DirectorModel> CreateAsync(DirectorModel entity)
     {
-        var directorDto = _mapper.Map<DirectorDto>(entity);
+        var directorDto = _mapper.Map<Director>(entity);
         directorDto = await _unitOfWork.DirectorRepository.CreateAsync(directorDto);
-        await _unitOfWork.Save();
+        await _unitOfWork.SaveAsync();
 
-        var director = _mapper.Map<Director>(directorDto);
+        var director = _mapper.Map<DirectorModel>(directorDto);
         
         return director;
     }
 
-    public async Task<List<Director>> GetAsync()
+    public async Task<List<DirectorModel>> GetAsync()
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Director?> GetAsync(Guid id)
+    public async Task<DirectorModel?> GetAsync(Guid id)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Director?> UpdateAsync(Guid id, Director entity)
+    public async Task<DirectorModel?> UpdateAsync(Guid id, DirectorModel entity)
     {
         throw new NotImplementedException();
     }

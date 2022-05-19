@@ -2,7 +2,7 @@
 
 namespace BLL.Abstractions.Interfaces;
 
-public interface IService<T> where T : BaseEntity
+public interface IService<T> where T : BaseModel
 {
     Task<T> CreateAsync(T entity);
     

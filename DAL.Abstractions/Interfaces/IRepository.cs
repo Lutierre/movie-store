@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
-using DTO.Entities;
+using Entities;
 
 namespace DAL.Abstractions.Interfaces;
 
-public interface IRepository<T> where T: BaseEntityDto
+public interface IRepository<T> where T: BaseEntity
 {
     Task<List<T>> GetAsync();
     

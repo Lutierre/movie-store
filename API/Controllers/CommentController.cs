@@ -18,8 +18,8 @@ public class CommentController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<Comment> Post([FromBody] Comment comment) => await _commentService.CreateAsync(comment);
+    public async Task<CommentModel> Post([FromBody] CommentModel commentModel) => await _commentService.CreateAsync(commentModel);
 
     [HttpGet("{movieId}")]
-    public async Task<List<Comment>> Get(Guid movieId) => await _commentService.GetByMovieAsync(movieId);
+    public async Task<List<CommentModel>> Get(Guid movieId) => await _commentService.GetByMovieAsync(movieId);
 }

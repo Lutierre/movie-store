@@ -1,6 +1,6 @@
 ﻿namespace Core.Models;
 
-public class Comment : BaseEntity
+public class CommentModel : BaseModel
 {
     public string? Author { get; set; }
     

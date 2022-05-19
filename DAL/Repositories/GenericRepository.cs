@@ -1,12 +1,12 @@
 ﻿using System.Linq.Expressions;
 using DAL.Abstractions.Interfaces;
 using DAL.Context;
-using DTO.Entities;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories;
 
-public class GenericRepository<T> : IRepository<T> where T : BaseEntityDto
+public class GenericRepository<T> : IRepository<T> where T : BaseEntity
 {
     protected readonly MovieStoreContext Context;
     

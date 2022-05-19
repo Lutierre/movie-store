@@ -1,9 +1,9 @@
 ﻿using Core.Models.Enums;
-using DTO.Entities;
+using Entities;
 
 namespace DAL.Abstractions.Interfaces;
 
-public interface IGenreRepository : IRepository<GenreDto>
+public interface IGenreRepository : IRepository<Genre>
 {
-    Task<GenreDto?> GetByCodeAsync(GenreCode code);
+    Task<Genre?> GetByCodeAsync(GenreCode code);
 }

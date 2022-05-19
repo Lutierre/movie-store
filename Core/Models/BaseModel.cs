@@ -1,6 +1,6 @@
 ﻿namespace Core.Models;
 
-public abstract class BaseEntity
+public abstract class BaseModel
 {
     public Guid Id { get; set; }
 }

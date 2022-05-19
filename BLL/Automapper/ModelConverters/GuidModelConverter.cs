@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using DAL.Abstractions.Interfaces;
-using DTO.Entities;
+using Entities;
 
 namespace BLL.Automapper.ModelConverters;
 
-internal class GuidModelConverter<T> : ITypeConverter<Guid, T> where T: BaseEntityDto
+internal class GuidModelConverter<T> : ITypeConverter<Guid, T> where T: BaseEntity
 {
     private readonly IRepository<T> _repository;
 
