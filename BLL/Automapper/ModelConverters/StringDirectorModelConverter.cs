@@ -1,20 +1,22 @@
 ﻿using AutoMapper;
+using BLL.Abstractions.Interfaces;
 using Core.Models;
-using DAL;
 
 namespace BLL.Automapper.ModelConverters;
 
 internal class StringDirectorModelConverter : ITypeConverter<string, DirectorModel>
 {
-    private readonly UnitOfWork _unitOfWork;
+    private readonly IService<DirectorModel> _directorService;
     private readonly IMapper _mapper;
 
-    public StringDirectorModelConverter(IMapper mapper, UnitOfWork unitOfWork)
+    public StringDirectorModelConverter(IMapper mapper, IService<DirectorModel> directorService)
     {
         _mapper = mapper;
-        _unitOfWork = unitOfWork;
+        _directorService = directorService;
     }
 
     public DirectorModel Convert(string source, DirectorModel destination, ResolutionContext context) 
-        => _mapper.Map<DirectorModel>(_unitOfWork.DirectorRepository.GetFilteredAsync(dto => dto.FullName == source).Result);
+        => _mapper.Map<DirectorModel>(
+                _directorService.GetFilteredAsync(directorModel => directorModel.FullName == source).Result
+            );
 }

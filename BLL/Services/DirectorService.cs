@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq.Expressions;
+using AutoMapper;
 using BLL.Abstractions.Interfaces;
 using Core.Models;
 using DAL;
@@ -36,6 +37,15 @@ public class DirectorService : IService<DirectorModel>
     public async Task<DirectorModel?> GetAsync(Guid id)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<DirectorModel> GetFilteredAsync(Expression<Func<DirectorModel, bool>> predicate)
+    {
+        var director = await _unitOfWork.DirectorRepository
+            .GetFilteredAsync(directorModel => predicate.Compile()(_mapper.Map<DirectorModel>(directorModel)));
+        var directorModel = _mapper.Map<DirectorModel>(director);
+        
+        return directorModel;    
     }
 
     public async Task<DirectorModel?> UpdateAsync(Guid id, DirectorModel entity)

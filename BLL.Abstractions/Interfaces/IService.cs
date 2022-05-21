@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using System.Linq.Expressions;
+using Core.Models;
 
 namespace BLL.Abstractions.Interfaces;
 
@@ -10,6 +11,8 @@ public interface IService<T> where T : BaseModel
 
     Task<T?> GetAsync(Guid id);
 
+    Task<T> GetFilteredAsync(Expression<Func<T,bool>> predicate);
+    
     Task<T?> UpdateAsync(Guid id, T entity);
 
     Task DeleteAsync(Guid id);

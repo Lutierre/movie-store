@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq.Expressions;
+using AutoMapper;
 using BLL.Abstractions.Interfaces;
 using Core.Models;
 using DAL;
@@ -44,6 +45,11 @@ public class CommentService : ICommentService
     }
 
     public async Task<CommentModel?> GetAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<CommentModel> GetFilteredAsync(Expression<Func<CommentModel, bool>> predicate)
     {
         throw new NotImplementedException();
     }

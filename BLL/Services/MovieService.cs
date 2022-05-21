@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq.Expressions;
+using AutoMapper;
 using BLL.Abstractions.Interfaces;
 using Core.Models;
 using DAL;
@@ -30,6 +31,15 @@ public class MovieService : IService<MovieModel>
         var movie = await _unitOfWork.MovieRepository.GetAsync(id);
         var movieModel = _mapper.Map<MovieModel>(movie);
 
+        return movieModel;
+    }
+
+    public async Task<MovieModel> GetFilteredAsync(Expression<Func<MovieModel, bool>> predicate)
+    {
+        var movie = await _unitOfWork.MovieRepository
+            .GetFilteredAsync(movieModel => predicate.Compile()(_mapper.Map<MovieModel>(movieModel)));
+        var movieModel = _mapper.Map<MovieModel>(movie);
+        
         return movieModel;
     }
 
