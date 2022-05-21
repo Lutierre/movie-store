@@ -14,6 +14,6 @@ internal class DirectorModelConverter : ITypeConverter<string, Director>
     }
 
     public Director Convert(string source, Director destination, ResolutionContext context)
-        => _unitOfWork.DirectorRepository.GetFilteredAsync(dto => dto.FullName == source).Result ??
+        => _unitOfWork.DirectorRepository.GetFilteredAsync(director => director.FullName == source).Result ??
            _unitOfWork.DirectorRepository.CreateAsync(new Director { FullName = source }).Result;
 }

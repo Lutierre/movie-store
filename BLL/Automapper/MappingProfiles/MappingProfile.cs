@@ -21,10 +21,15 @@ public class MappingProfile : Profile
         CreateMap<string, Director>().ConvertUsing<DirectorModelConverter>();
 
         CreateMap<CommentModel, Comment>()
-            .ForMember(dm => dm.Movie, opt => opt.MapFrom(src => src.MovieId))
-            .ForMember(dm => dm.ParentComment, opt => opt.MapFrom(src => src.ParentCommentId));
+            .ForMember(comment => comment.Movie, 
+                expression => expression.MapFrom(commentModel => commentModel.MovieId))
+            .ForMember(comment => comment.ParentComment, 
+                expression => expression.MapFrom(commentModel => commentModel.ParentCommentId));
+        
         CreateMap<Comment, CommentModel>()
-            .ForMember(dm => dm.MovieId, opt => opt.MapFrom(src => src.Movie.Id))
-            .ForMember(dm => dm.ParentCommentId, opt => opt.MapFrom(src => src.ParentComment!.Id));
+            .ForMember(commentModel => commentModel.MovieId, 
+                expression => expression.MapFrom(comment => comment.Movie!.Id))
+            .ForMember(commentModel => commentModel.ParentCommentId, 
+                expression => expression.MapFrom(comment => comment.ParentComment!.Id));
     }
 }

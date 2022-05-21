@@ -19,23 +19,23 @@ public class CommentService : ICommentService
 
     public async Task<List<CommentModel>> GetByMovieAsync(Guid movieId)
     {
-        var movieDto = await _unitOfWork.MovieRepository.GetAsync(movieId);
-        var movie = _mapper.Map<MovieModel>(movieDto);
+        var movie = await _unitOfWork.MovieRepository.GetAsync(movieId);
+        var movieModel = _mapper.Map<MovieModel>(movie);
         
-        var comments = movie.Comments.ToList();
+        var comments = movieModel.Comments.ToList();
 
         return comments;
     }
     
     public async Task<CommentModel> CreateAsync(CommentModel entity)
     {
-        var commentDto = _mapper.Map<Comment>(entity);
-        commentDto = await _unitOfWork.CommentRepository.CreateAsync(commentDto);
+        var comment = _mapper.Map<Comment>(entity);
+        comment = await _unitOfWork.CommentRepository.CreateAsync(comment);
         await _unitOfWork.SaveAsync();
 
-        var comment = _mapper.Map<CommentModel>(commentDto);
+        var commentModel = _mapper.Map<CommentModel>(comment);
         
-        return comment;    
+        return commentModel;    
     }
 
     public async Task<List<CommentModel>> GetAsync()

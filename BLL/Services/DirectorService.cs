@@ -19,13 +19,13 @@ public class DirectorService : IService<DirectorModel>
 
     public async Task<DirectorModel> CreateAsync(DirectorModel entity)
     {
-        var directorDto = _mapper.Map<Director>(entity);
-        directorDto = await _unitOfWork.DirectorRepository.CreateAsync(directorDto);
+        var director = _mapper.Map<Director>(entity);
+        director = await _unitOfWork.DirectorRepository.CreateAsync(director);
         await _unitOfWork.SaveAsync();
 
-        var director = _mapper.Map<DirectorModel>(directorDto);
+        var directorModel = _mapper.Map<DirectorModel>(director);
         
-        return director;
+        return directorModel;
     }
 
     public async Task<List<DirectorModel>> GetAsync()

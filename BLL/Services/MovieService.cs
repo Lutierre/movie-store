@@ -19,40 +19,40 @@ public class MovieService : IService<MovieModel>
 
     public async Task<List<MovieModel>> GetAsync()
     {
-        var moviesDtos = await _unitOfWork.MovieRepository.GetAsync();
-        var movies = moviesDtos.Select(dto => _mapper.Map<MovieModel>(dto)).ToList();
+        var movies = await _unitOfWork.MovieRepository.GetAsync();
+        var movieModels = movies.Select(dto => _mapper.Map<MovieModel>(dto)).ToList();
 
-        return movies;
+        return movieModels;
     }
 
     public async Task<MovieModel?> GetAsync(Guid id) 
     {
-        var movieDto = await _unitOfWork.MovieRepository.GetAsync(id);
-        var movie = _mapper.Map<MovieModel>(movieDto);
+        var movie = await _unitOfWork.MovieRepository.GetAsync(id);
+        var movieModel = _mapper.Map<MovieModel>(movie);
 
-        return movie;
+        return movieModel;
     }
 
     public async Task<MovieModel> CreateAsync(MovieModel entity)
     {
-        var movieDto = _mapper.Map<Movie>(entity);
-        movieDto = await _unitOfWork.MovieRepository.CreateAsync(movieDto);
+        var movie = _mapper.Map<Movie>(entity);
+        movie = await _unitOfWork.MovieRepository.CreateAsync(movie);
         await _unitOfWork.SaveAsync();
 
-        var movie = _mapper.Map<MovieModel>(movieDto);
+        var movieModel = _mapper.Map<MovieModel>(movie);
         
-        return movie;
+        return movieModel;
     }
 
     public async Task<MovieModel?> UpdateAsync(Guid id, MovieModel? entity)
     {
-        var movieDto = _mapper.Map<Movie>(entity);
-        movieDto = await _unitOfWork.MovieRepository.UpdateAsync(id, movieDto);
+        var movie = _mapper.Map<Movie>(entity);
+        movie = await _unitOfWork.MovieRepository.UpdateAsync(id, movie);
         await _unitOfWork.SaveAsync();
         
-        var movie = _mapper.Map<MovieModel>(movieDto);
+        var movieModel = _mapper.Map<MovieModel>(movie);
         
-        return movie;
+        return movieModel;
     }
 
     public async Task DeleteAsync(Guid id)

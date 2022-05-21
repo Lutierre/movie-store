@@ -30,7 +30,6 @@ builder.Services.AddScoped<IService<DirectorModel>, DirectorService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<UnitOfWork>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
