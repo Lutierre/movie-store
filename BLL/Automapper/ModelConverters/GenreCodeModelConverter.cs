@@ -1,19 +1,19 @@
 ﻿using AutoMapper;
+using BLL.Abstractions.Interfaces;
 using Core.Models.Enums;
-using DAL;
 using Entities;
 
 namespace BLL.Automapper.ModelConverters;
 
 internal class GenreCodeModelConverter : ITypeConverter<GenreCode, Genre>
 {
-    private readonly UnitOfWork _unitOfWork;
+    private readonly IGenreService _genreService;
 
-    public GenreCodeModelConverter(UnitOfWork unitOfWork)
+    public GenreCodeModelConverter(IGenreService genreService)
     {
-        _unitOfWork = unitOfWork;
+        _genreService = genreService;
     }
 
     public Genre? Convert(GenreCode source, Genre destination, ResolutionContext context)
-        => _unitOfWork.GenreRepository.GetByCodeAsync(source).Result;
+        => _genreService.GetByCodeAsync(source).Result;
 }
