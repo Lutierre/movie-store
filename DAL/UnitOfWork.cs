@@ -30,4 +30,17 @@ public class UnitOfWork
     public IGenreRepository GenreRepository => _genreRepository ??= new GenreRepository(_context);
 
     public async Task SaveAsync() => await _context.SaveChangesAsync();
+
+    public IRepository<T> GetRepository<T>() where T : BaseEntity
+    {
+        var entityType = typeof(T);
+
+        return entityType switch
+        {
+            Type when entityType == typeof(Movie) => MovieRepository as IRepository<T>,
+            Type when entityType == typeof(Comment) => CommentRepository as IRepository<T>,
+            Type when entityType == typeof(Director) => DirectorRepository as IRepository<T>,
+            _ => throw new ArgumentException()
+        };
+    }
 }
