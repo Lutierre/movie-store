@@ -5,9 +5,7 @@ using BLL.Automapper.MappingProfiles;
 using BLL.Services;
 using Core.Models;
 using DAL;
-using DAL.Abstractions.Interfaces;
 using DAL.Context;
-using DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 
@@ -25,9 +23,10 @@ builder.Services.AddDbContext<MovieStoreContext>(options =>
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<TimerFilterAttribute>();
-builder.Services.AddScoped<IService<MovieModel>, MovieService>();
-builder.Services.AddScoped<IService<DirectorModel>, DirectorService>();
+builder.Services.AddScoped<ICommonService<MovieModel>, MovieService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IDirectorService, DirectorService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<UnitOfWork>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 

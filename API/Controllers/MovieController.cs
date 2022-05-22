@@ -10,9 +10,9 @@ namespace API.Controllers;
 [Route("Movies")]
 public class MovieController : ControllerBase
 {
-    private readonly IService<MovieModel> _movieService;
+    private readonly ICommonService<MovieModel> _movieService;
 
-    public MovieController(IService<MovieModel> movieService)
+    public MovieController(ICommonService<MovieModel> movieService)
     {
         _movieService = movieService;
     }
