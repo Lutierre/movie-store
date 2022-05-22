@@ -13,8 +13,8 @@ public class MappingProfile : Profile
         CreateMap<Movie, MovieModel>().ReverseMap();
         CreateMap<Director, DirectorModel>().ReverseMap();
 
-        CreateMap<Guid, Comment>().ConvertUsing<GuidModelConverter<Comment>>();
-        CreateMap<Guid, Movie>().ConvertUsing<GuidModelConverter<Movie>>();
+        CreateMap<Guid, Comment>().ConvertUsing<GuidCommentModelConverter>();
+        CreateMap<Guid, Movie>().ConvertUsing<GuidMovieModelConverter>();
         CreateMap<GenreCode, Genre>().ConvertUsing<GenreCodeModelConverter>();
         CreateMap<Genre, GenreCode>().ConvertUsing<GenreEntityConverter>();
         CreateMap<Director, string>().ConvertUsing<DirectorFromEntityConverter>();
