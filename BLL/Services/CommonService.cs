@@ -2,7 +2,7 @@
 using AutoMapper;
 using BLL.Abstractions.Interfaces;
 using Core.Models;
-using DAL;
+using DAL.Abstractions.Interfaces;
 using Entities;
 
 namespace BLL.Services;
@@ -10,10 +10,10 @@ namespace BLL.Services;
 internal class CommonService<TModel, TEntity> : ICommonService<TModel>
     where TModel : BaseModel where TEntity : BaseEntity
 {
-    protected readonly UnitOfWork _unitOfWork;
+    protected readonly IUnitOfWork _unitOfWork;
     protected readonly IMapper _mapper;
 
-    public CommonService(UnitOfWork unitOfWork, IMapper mapper)
+    public CommonService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;

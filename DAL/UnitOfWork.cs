@@ -5,7 +5,7 @@ using Entities;
 
 namespace DAL;
 
-public class UnitOfWork
+internal class UnitOfWork : IUnitOfWork
 {
     private readonly MovieStoreContext _context;
     private IRepository<Comment>? _commentRepository;
@@ -18,7 +18,7 @@ public class UnitOfWork
         _context = context;
     }
 
-    public IRepository<Comment?> CommentRepository => 
+    public IRepository<Comment> CommentRepository => 
         _commentRepository ??= new CommentRepository(_context);
 
     public IRepository<Director> DirectorRepository => 

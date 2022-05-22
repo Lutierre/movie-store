@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using BLL.Abstractions.Interfaces;
 using Core.Models;
-using DAL;
+using DAL.Abstractions.Interfaces;
 using Entities;
 
 namespace BLL.Services;
 
 internal class CommentService : CommonService<CommentModel, Comment>, ICommentService
 {
-    public CommentService(UnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+    public CommentService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {
     }
 

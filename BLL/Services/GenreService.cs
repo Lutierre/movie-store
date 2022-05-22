@@ -1,15 +1,15 @@
 ﻿using BLL.Abstractions.Interfaces;
 using Core.Models.Enums;
-using DAL;
+using DAL.Abstractions.Interfaces;
 using Entities;
 
 namespace BLL.Services;
 
 internal class GenreService : IGenreService
 {
-    private readonly UnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GenreService(UnitOfWork unitOfWork)
+    public GenreService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
