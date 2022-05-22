@@ -56,23 +56,23 @@ internal class MovieRepository : IRepository<Movie>
         return existing;
     }
 
-    private void UpdateRelated<T>(List<T>? existingDtos, List<T>? newDtos) where T : BaseEntity
+    private void UpdateRelated<T>(List<T>? existingEntities, List<T>? newEntities) where T : BaseEntity
     {
-        foreach (var entityDto in existingDtos.ToList())
+        foreach (var item in existingEntities.ToList())
         {
-            if (!newDtos.Any(dto => dto.Id == entityDto.Id))
+            if (!newEntities.Any(entity => entity.Id == item.Id))
             {
-                existingDtos.Remove(entityDto);
+                existingEntities.Remove(item);
             }
         }
 
-        foreach (var item in newDtos)
+        foreach (var item in newEntities)
         {
-            var dto = existingDtos.SingleOrDefault(d => d.Id == item.Id);
+            var entity = existingEntities.SingleOrDefault(entity => entity.Id == item.Id);
 
-            if (dto is null)
+            if (entity is null)
             {
-                existingDtos.Add(item);
+                existingEntities.Add(item);
             }
         }
     }
