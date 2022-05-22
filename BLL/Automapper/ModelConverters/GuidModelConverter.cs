@@ -1,17 +1,18 @@
 ﻿using AutoMapper;
-using DAL.Abstractions.Interfaces;
+using DAL;
 using Entities;
 
 namespace BLL.Automapper.ModelConverters;
 
 internal class GuidModelConverter<T> : ITypeConverter<Guid, T> where T: BaseEntity
 {
-    private readonly IRepository<T> _repository;
+    private readonly UnitOfWork _unitOfWork;
 
-    public GuidModelConverter(IRepository<T> repository)
+    public GuidModelConverter(UnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
-    public T Convert(Guid source, T destination, ResolutionContext context) => _repository.GetAsync(source).Result;
+    public T Convert(Guid source, T destination, ResolutionContext context) 
+        => _unitOfWork.GetRepository<T>().GetAsync(source).Result;
 }
