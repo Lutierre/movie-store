@@ -1,19 +1,18 @@
 ﻿using AutoMapper;
-using DAL;
+using BLL.Abstractions.Interfaces;
 using Entities;
 
 namespace BLL.Automapper.ModelConverters;
 
 internal class DirectorToEntityConverter : ITypeConverter<string, Director>
 {
-    private readonly UnitOfWork _unitOfWork;
+    private readonly IDirectorService _directorService;
 
-    public DirectorToEntityConverter(UnitOfWork unitOfWork)
+    public DirectorToEntityConverter(IDirectorService directorService)
     {
-        _unitOfWork = unitOfWork;
+        _directorService = directorService;
     }
 
     public Director Convert(string source, Director destination, ResolutionContext context)
-        => _unitOfWork.DirectorRepository.GetSingleAsync(director => director.FullName == source).Result ??
-           _unitOfWork.DirectorRepository.CreateAsync(new Director { FullName = source }).Result;
+        => _directorService.GetByFullName(source);
 }
