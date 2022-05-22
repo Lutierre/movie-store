@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using DAL.Abstractions.Interfaces;
 using DAL.Context;
+using DAL.ExtensionMethods;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,18 +17,11 @@ internal class MovieRepository : IRepository<Movie>
         _context = context;
         _wrappeeMovieRepository = new GenericRepository<Movie>(context);
     }
+    
+    public async Task<List<Movie>> GetAsync() => await _context.Set<Movie>().AddIncludes().ToListAsync();
 
-    public async Task<List<Movie>> GetAsync() => await _context.Set<Movie>()
-        .Include(dto => dto.Comments)
-        .Include(dto => dto.Directors)
-        .Include(dto => dto.Genres)
-        .ToListAsync();
-
-    public async Task<Movie?> GetAsync(Guid id) => await _context.Set<Movie>()
-        .Include(dto => dto.Comments)
-        .Include(dto => dto.Directors)
-        .Include(dto => dto.Genres)
-        .SingleOrDefaultAsync(dto => dto.Id == id);
+    public async Task<Movie?> GetAsync(Guid id)
+        => await _context.Set<Movie>().AddIncludes().SingleOrDefaultAsync(movie => movie.Id == id);
 
     public async Task<Movie> CreateAsync(Movie entity) => await _wrappeeMovieRepository.CreateAsync(entity);
 
@@ -40,11 +34,7 @@ internal class MovieRepository : IRepository<Movie>
             return null;
         }
         
-        var existing = await _context.Set<Movie>()
-            .Include(dto => dto.Comments)
-            .Include(dto => dto.Directors)
-            .Include(dto => dto.Genres)
-            .SingleOrDefaultAsync(dto => dto.Id == id);
+        var existing = await _context.Set<Movie>().AddIncludes().SingleOrDefaultAsync(dto => dto.Id == id);
 
         if (existing == null)
         {
