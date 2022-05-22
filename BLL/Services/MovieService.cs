@@ -6,7 +6,7 @@ using Entities;
 
 namespace BLL.Services;
 
-public class MovieService : CommonService<MovieModel, Movie>, IMovieService
+internal class MovieService : CommonService<MovieModel, Movie>, IMovieService
 {
     public MovieService(UnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Context;
 
-public class MovieStoreContext : DbContext
+internal class MovieStoreContext : DbContext
 {
     public MovieStoreContext(DbContextOptions<MovieStoreContext> options) : base(options)
     {

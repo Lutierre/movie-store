@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories;
 
-public class GenreRepository : GenericRepository<Genre>, IGenreRepository
+internal class GenreRepository : GenericRepository<Genre>, IGenreRepository
 {
    public GenreRepository(MovieStoreContext context) : base(context)
    {

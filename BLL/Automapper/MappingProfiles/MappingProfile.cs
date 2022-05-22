@@ -6,7 +6,7 @@ using Entities;
 
 namespace BLL.Automapper.MappingProfiles;
 
-public class MappingProfile : Profile
+internal class MappingProfile : Profile
 {
     public MappingProfile()
     {

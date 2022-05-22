@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories;
 
-public class CommentRepository : GenericRepository<Comment>
+internal class CommentRepository : GenericRepository<Comment>
 {
     public CommentRepository(MovieStoreContext context) : base(context)
     {

@@ -6,7 +6,7 @@ using Entities;
 
 namespace BLL.Services;
 
-public class DirectorService : CommonService<DirectorModel, Director>, IDirectorService
+internal class DirectorService : CommonService<DirectorModel, Director>, IDirectorService
 {
     public DirectorService(UnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {

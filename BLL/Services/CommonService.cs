@@ -7,7 +7,7 @@ using Entities;
 
 namespace BLL.Services;
 
-public class CommonService<TModel, TEntity> : ICommonService<TModel>
+internal class CommonService<TModel, TEntity> : ICommonService<TModel>
     where TModel : BaseModel where TEntity : BaseEntity
 {
     protected readonly UnitOfWork _unitOfWork;

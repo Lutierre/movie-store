@@ -6,7 +6,7 @@ using Entities;
 
 namespace BLL.Services;
 
-public class CommentService : CommonService<CommentModel, Comment>, ICommentService
+internal class CommentService : CommonService<CommentModel, Comment>, ICommentService
 {
     public CommentService(UnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
     {

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories;
 
-public class GenericRepository<T> : IRepository<T> where T : BaseEntity
+internal class GenericRepository<T> : IRepository<T> where T : BaseEntity
 {
     protected readonly MovieStoreContext Context;
     

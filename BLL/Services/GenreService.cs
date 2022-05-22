@@ -5,7 +5,7 @@ using Entities;
 
 namespace BLL.Services;
 
-public class GenreService : IGenreService
+internal class GenreService : IGenreService
 {
     private readonly UnitOfWork _unitOfWork;
 

@@ -1,13 +1,7 @@
 using API.ActionFilters;
 using API.Middlewares;
-using BLL.Abstractions.Interfaces;
-using BLL.Automapper.MappingProfiles;
-using BLL.Services;
+using BLL;
 using DAL;
-using DAL.Abstractions.Interfaces;
-using DAL.Context;
-using DAL.Repositories;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,18 +12,10 @@ builder.Host.ConfigureLogging(logging =>
     logging.AddConsole();
 });
 
-builder.Services.AddDbContext<MovieStoreContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-        optionsBuilder => optionsBuilder.MigrationsAssembly(typeof(MovieStoreContext).Assembly.FullName)));
-builder.Services.AddAutoMapper(typeof(MappingProfile));
-
 builder.Services.AddScoped<TimerFilterAttribute>();
-builder.Services.AddScoped<IMovieService, MovieService>();
-builder.Services.AddScoped<ICommentService, CommentService>();
-builder.Services.AddScoped<IDirectorService, DirectorService>();
-builder.Services.AddScoped<IGenreService, GenreService>();
-builder.Services.AddScoped<UnitOfWork>();
-builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+
+builder.Services.AddBllServices();
+builder.Services.AddDalServices(builder.Configuration);
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
