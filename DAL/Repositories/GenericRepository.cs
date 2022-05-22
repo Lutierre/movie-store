@@ -57,6 +57,9 @@ public class GenericRepository<T> : IRepository<T> where T : BaseEntity
         Context.Set<T>().Remove(baseEntity);
     }
 
-    public async Task<T?> GetFilteredAsync(Expression<Func<T, bool>> predicate)
+    public async Task<T?> GetSingleAsync(Expression<Func<T, bool>> predicate)
         => await Context.Set<T>().SingleOrDefaultAsync(predicate);
+
+    public async Task<List<T>> GetFilteredAsync(Expression<Func<T, bool>> predicate)
+        => await Context.Set<T>().Where(predicate).ToListAsync();
 }

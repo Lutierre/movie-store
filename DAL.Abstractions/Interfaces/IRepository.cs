@@ -15,5 +15,7 @@ public interface IRepository<T> where T: BaseEntity
     
     Task DeleteAsync(Guid id);
 
-    Task<T?> GetFilteredAsync(Expression<Func<T,bool>> predicate);
+    Task<T?> GetSingleAsync(Expression<Func<T,bool>> predicate);
+    
+    Task <List<T>> GetFilteredAsync(Expression<Func<T,bool>> predicate);
 }

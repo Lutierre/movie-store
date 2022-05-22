@@ -27,6 +27,12 @@ internal class MovieRepository : IRepository<Movie>
 
     public async Task DeleteAsync(Guid id) => await _wrappeeMovieRepository.DeleteAsync(id);
     
+    public async Task<Movie?> GetSingleAsync(Expression<Func<Movie, bool>> predicate)
+        => await _context.Set<Movie>().AddIncludes().SingleOrDefaultAsync(predicate);
+
+    public async Task<List<Movie>> GetFilteredAsync(Expression<Func<Movie, bool>> predicate)
+        => await _context.Set<Movie>().AddIncludes().Where(predicate).ToListAsync();
+    
     public async Task<Movie?> UpdateAsync(Guid id, Movie? entity)
     {
         if (entity == null)
@@ -69,10 +75,5 @@ internal class MovieRepository : IRepository<Movie>
                 existingDtos.Add(item);
             }
         }
-    }
-
-    public Task<Movie?> GetFilteredAsync(Expression<Func<Movie, bool>> predicate)
-    {
-        throw new NotImplementedException();
     }
 }
