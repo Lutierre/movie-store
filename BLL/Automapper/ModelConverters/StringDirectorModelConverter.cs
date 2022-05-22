@@ -6,10 +6,10 @@ namespace BLL.Automapper.ModelConverters;
 
 internal class StringDirectorModelConverter : ITypeConverter<string, DirectorModel>
 {
-    private readonly IService<DirectorModel> _directorService;
+    private readonly IDirectorService _directorService;
     private readonly IMapper _mapper;
 
-    public StringDirectorModelConverter(IMapper mapper, IService<DirectorModel> directorService)
+    public StringDirectorModelConverter(IMapper mapper, IDirectorService directorService)
     {
         _mapper = mapper;
         _directorService = directorService;
