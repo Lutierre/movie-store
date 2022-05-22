@@ -16,9 +16,9 @@ public class MappingProfile : Profile
         CreateMap<Guid, Comment>().ConvertUsing<GuidModelConverter<Comment>>();
         CreateMap<Guid, Movie>().ConvertUsing<GuidModelConverter<Movie>>();
         CreateMap<GenreCode, Genre>().ConvertUsing<GenreCodeModelConverter>();
-        CreateMap<Genre, GenreCode>().ConvertUsing<GenreDtoModelConverter>();
-        CreateMap<Director, string>().ConvertUsing<DirectorDtoModelConverter>();
-        CreateMap<string, Director>().ConvertUsing<DirectorModelConverter>();
+        CreateMap<Genre, GenreCode>().ConvertUsing<GenreEntityConverter>();
+        CreateMap<Director, string>().ConvertUsing<DirectorFromEntityConverter>();
+        CreateMap<string, Director>().ConvertUsing<DirectorToEntityConverter>();
 
         CreateMap<CommentModel, Comment>()
             .ForMember(comment => comment.Movie, 

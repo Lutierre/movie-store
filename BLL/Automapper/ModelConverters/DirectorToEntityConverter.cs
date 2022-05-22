@@ -4,11 +4,11 @@ using Entities;
 
 namespace BLL.Automapper.ModelConverters;
 
-internal class DirectorModelConverter : ITypeConverter<string, Director>
+internal class DirectorToEntityConverter : ITypeConverter<string, Director>
 {
     private readonly UnitOfWork _unitOfWork;
 
-    public DirectorModelConverter(UnitOfWork unitOfWork)
+    public DirectorToEntityConverter(UnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
