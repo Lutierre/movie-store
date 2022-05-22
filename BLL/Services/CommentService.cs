@@ -20,4 +20,6 @@ public class CommentService : CommonService<CommentModel, Comment>, ICommentServ
 
         return commentModels;
     }
+
+    public async Task<Comment?> GetEntityAsync(Guid commentId) => await _unitOfWork.CommentRepository.GetAsync(commentId);
 }

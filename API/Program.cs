@@ -3,7 +3,6 @@ using API.Middlewares;
 using BLL.Abstractions.Interfaces;
 using BLL.Automapper.MappingProfiles;
 using BLL.Services;
-using Core.Models;
 using DAL;
 using DAL.Abstractions.Interfaces;
 using DAL.Context;
@@ -25,7 +24,7 @@ builder.Services.AddDbContext<MovieStoreContext>(options =>
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddScoped<TimerFilterAttribute>();
-builder.Services.AddScoped<ICommonService<MovieModel>, MovieService>();
+builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IDirectorService, DirectorService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
