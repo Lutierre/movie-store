@@ -19,7 +19,7 @@ public class UnitOfWork
     }
 
     public IRepository<Comment> CommentRepository => 
-        _commentRepository ??= new GenericRepository<Comment>(_context);
+        _commentRepository ??= new CommentRepository(_context);
 
     public IRepository<Director> DirectorRepository => 
         _directorRepository ??= new GenericRepository<Director>(_context);
