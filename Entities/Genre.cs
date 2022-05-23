@@ -1,10 +1,13 @@
-﻿namespace Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Entities;
 
 public class Genre : BaseEntity
 {
-    public string? Name { get; set; }
+    [MaxLength(20)]
+    public string Name { get; set; } = string.Empty;
     
     public int Code { get; set; }
     
-    public List<Movie>? Movies { get; set; }
+    public List<Movie> Movies { get; set; } = new();
 }

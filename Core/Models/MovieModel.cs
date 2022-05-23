@@ -4,9 +4,9 @@ namespace Core.Models;
 
 public class MovieModel : BaseModel
 {
-    public string? Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
-    public string? Description { get; set; }
+    public string Description { get; set; } = string.Empty;
     
     public DateTime ReleaseDate { get; set; }
     
@@ -14,5 +14,5 @@ public class MovieModel : BaseModel
     
     public List<GenreCode>? Genres { get; set; }
     
-    public List<CommentModel>? Comments { get; set; }
+    public List<CommentModel> Comments { get; set; } = new();
 }

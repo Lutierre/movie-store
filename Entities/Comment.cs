@@ -1,12 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities
 {
     public class Comment : BaseEntity
     {
-        public string? Author { get; set; }
+        [MaxLength(50)]
+        public string Author { get; set; } = string.Empty;
     
-        public string? Body { get; set; }
+        [MaxLength(1000)]
+        public string Body { get; set; } = string.Empty;
 
         [ForeignKey("MovieId")]
         public Movie? Movie { get; set; }

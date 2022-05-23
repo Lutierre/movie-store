@@ -1,9 +1,12 @@
-﻿namespace Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Entities
 {
     public class Director : BaseEntity
     {
-        public string? FullName { get; set; }
+        [MaxLength(50)]
+        public string FullName { get; set; } = string.Empty;
         
-        public List<Movie>? Movies { get; set; }
+        public List<Movie> Movies { get; set; } = new();
     }
 }
