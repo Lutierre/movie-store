@@ -14,6 +14,6 @@ internal class GenreService : IGenreService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Genre?> GetByCodeAsync(GenreCode genreCode)
-        => await _unitOfWork.GenreRepository.GetByCodeAsync(genreCode);
+    public Genre GetByCode(GenreCode genreCode)
+        => _unitOfWork.GenreRepository.GetByCodeAsync(genreCode);
 }

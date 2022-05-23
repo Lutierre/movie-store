@@ -2,7 +2,6 @@
 using DAL.Abstractions.Interfaces;
 using DAL.Context;
 using Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories;
 
@@ -12,6 +11,6 @@ internal class GenreRepository : GenericRepository<Genre>, IGenreRepository
    {
    }
 
-   public async Task<Genre?> GetByCodeAsync(GenreCode code) 
-      => await Context.Genres.SingleOrDefaultAsync(genre => genre.Code == (int)code);
+   public Genre? GetByCodeAsync(GenreCode code) 
+      => Context.Genres.SingleOrDefault(genre => genre.Code == (int)code);
 }

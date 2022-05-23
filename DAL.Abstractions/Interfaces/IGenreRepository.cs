@@ -5,5 +5,5 @@ namespace DAL.Abstractions.Interfaces;
 
 public interface IGenreRepository : IRepository<Genre>
 {
-    Task<Genre?> GetByCodeAsync(GenreCode code);
+    Genre? GetByCodeAsync(GenreCode code);
 }

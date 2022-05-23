@@ -18,14 +18,18 @@ internal class CommonService<TModel, TEntity> : ICommonService<TModel>
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
+
+    protected virtual TModel ConvertToModel(TEntity entity) => _mapper.Map<TModel>(entity);
+    
+    protected virtual TEntity ConvertToEntity(TModel model) => _mapper.Map<TEntity>(model);
     
     public async Task<TModel> CreateAsync(TModel model)
     {
-        var entity = _mapper.Map<TEntity>(model);
+        var entity = ConvertToEntity(model);
         entity = await _unitOfWork.GetRepository<TEntity>().CreateAsync(entity);
         await _unitOfWork.SaveAsync();
-
-        model = _mapper.Map<TModel>(entity);
+        
+        model = ConvertToModel(entity);
         
         return model;
     }
@@ -33,7 +37,7 @@ internal class CommonService<TModel, TEntity> : ICommonService<TModel>
     public async Task<List<TModel>> GetAsync()
     {
         var entities = await _unitOfWork.GetRepository<TEntity>().GetAsync();
-        var models = entities.Select(entity => _mapper.Map<TModel>(entity)).ToList();
+        var models = entities.Select(ConvertToModel).ToList();
 
         return models;
     }
@@ -41,7 +45,7 @@ internal class CommonService<TModel, TEntity> : ICommonService<TModel>
     public async Task<TModel?> GetAsync(Guid id) 
     {
         var entity = await _unitOfWork.GetRepository<TEntity>().GetAsync(id);
-        var model = _mapper.Map<TModel>(entity);
+        var model = ConvertToModel(entity);
 
         return model;
     }
@@ -49,19 +53,19 @@ internal class CommonService<TModel, TEntity> : ICommonService<TModel>
     public async Task<TModel> GetFilteredAsync(Expression<Func<TModel, bool>> predicate)
     {
         var entity = await _unitOfWork.GetRepository<TEntity>()
-            .GetSingleAsync(entity => predicate.Compile()(_mapper.Map<TModel>(entity)));
-        var model = _mapper.Map<TModel>(entity);
+            .GetSingleAsync(entity => predicate.Compile()(ConvertToModel(entity)));
+        var model = ConvertToModel(entity);
         
         return model;
     }
 
     public async Task<TModel?> UpdateAsync(Guid id, TModel model)
     {
-        var entity = _mapper.Map<TEntity>(model);
+        var entity = ConvertToEntity(model);
         entity = await _unitOfWork.GetRepository<TEntity>().UpdateAsync(id, entity);
         await _unitOfWork.SaveAsync();
         
-        model = _mapper.Map<TModel>(entity);
+        model = ConvertToModel(entity);
         
         return model;
     }

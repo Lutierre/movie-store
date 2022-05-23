@@ -5,5 +5,5 @@ namespace BLL.Abstractions.Interfaces;
 
 public interface IGenreService
 {
-    Task<Genre?> GetByCodeAsync(GenreCode genreCode);
+    Genre? GetByCode(GenreCode genreCode);
 }
