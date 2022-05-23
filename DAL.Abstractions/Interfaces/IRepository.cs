@@ -10,12 +10,16 @@ public interface IRepository<T> where T: BaseEntity
     Task<T?> GetAsync(Guid id);
 
     Task<T> CreateAsync(T entity);
+    
+    T Create(T entity);
 
     Task<T?> UpdateAsync(Guid id, T? entity);
     
     Task DeleteAsync(Guid id);
 
     Task<T?> GetSingleAsync(Expression<Func<T,bool>> predicate);
+    
+    T? GetSingle(Expression<Func<T,bool>> predicate);
     
     Task <List<T>> GetFilteredAsync(Expression<Func<T,bool>> predicate);
 }

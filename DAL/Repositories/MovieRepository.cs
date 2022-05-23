@@ -25,10 +25,15 @@ internal class MovieRepository : IRepository<Movie>
 
     public async Task<Movie> CreateAsync(Movie entity) => await _wrappeeMovieRepository.CreateAsync(entity);
 
+    public Movie Create(Movie entity) => _wrappeeMovieRepository.Create(entity);
+
     public async Task DeleteAsync(Guid id) => await _wrappeeMovieRepository.DeleteAsync(id);
     
     public async Task<Movie?> GetSingleAsync(Expression<Func<Movie, bool>> predicate)
         => await _context.Set<Movie>().AddIncludes().SingleOrDefaultAsync(predicate);
+
+    public Movie? GetSingle(Expression<Func<Movie, bool>> predicate) 
+        => _context.Set<Movie>().AddIncludes().SingleOrDefault(predicate);
 
     public async Task<List<Movie>> GetFilteredAsync(Expression<Func<Movie, bool>> predicate)
         => await _context.Set<Movie>().AddIncludes().Where(predicate).ToListAsync();

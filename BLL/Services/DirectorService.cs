@@ -12,8 +12,7 @@ internal class DirectorService : CommonService<DirectorModel, Director>, IDirect
     {
     }
 
-    // todo: to ask
     public Director GetByFullName(string fullName) 
-        => _unitOfWork.DirectorRepository.GetSingleAsync(director => director.FullName == fullName).Result
-           ?? _unitOfWork.DirectorRepository.CreateAsync(new Director { FullName = fullName }).Result;
+        => _unitOfWork.DirectorRepository.GetSingle(director => director.FullName == fullName)
+           ?? _unitOfWork.DirectorRepository.Create(new Director { FullName = fullName });
 }

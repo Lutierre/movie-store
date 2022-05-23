@@ -21,6 +21,9 @@ internal class GenericRepository<T> : IRepository<T> where T : BaseEntity
     
     public async Task<T?> GetSingleAsync(Expression<Func<T, bool>> predicate)
         => await Context.Set<T>().SingleOrDefaultAsync(predicate);
+    
+    public T? GetSingle(Expression<Func<T, bool>> predicate)
+        => Context.Set<T>().SingleOrDefault(predicate);
 
     public virtual async Task<List<T>> GetFilteredAsync(Expression<Func<T, bool>> predicate)
         => await Context.Set<T>().Where(predicate).ToListAsync();
@@ -28,6 +31,12 @@ internal class GenericRepository<T> : IRepository<T> where T : BaseEntity
     public async Task<T> CreateAsync(T entity)
     {
         await Context.Set<T>().AddAsync(entity);
+        return entity;
+    }
+    
+    public T Create(T entity)
+    {
+        Context.Set<T>().Add(entity);
         return entity;
     }
 
