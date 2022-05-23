@@ -49,7 +49,7 @@ internal class CommonService<TModel, TEntity> : ICommonService<TModel>
     public async Task<TModel> GetFilteredAsync(Expression<Func<TModel, bool>> predicate)
     {
         var entity = await _unitOfWork.GetRepository<TEntity>()
-            .GetSingleAsync(model => predicate.Compile()(_mapper.Map<TModel>(model)));
+            .GetSingleAsync(entity => predicate.Compile()(_mapper.Map<TModel>(entity)));
         var model = _mapper.Map<TModel>(entity);
         
         return model;

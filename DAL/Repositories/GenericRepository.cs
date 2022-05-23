@@ -18,6 +18,12 @@ internal class GenericRepository<T> : IRepository<T> where T : BaseEntity
     public async Task<List<T>> GetAsync() => await Context.Set<T>().ToListAsync();
 
     public async Task<T?> GetAsync(Guid id) => await Context.Set<T>().FindAsync(id);
+    
+    public async Task<T?> GetSingleAsync(Expression<Func<T, bool>> predicate)
+        => await Context.Set<T>().SingleOrDefaultAsync(predicate);
+
+    public virtual async Task<List<T>> GetFilteredAsync(Expression<Func<T, bool>> predicate)
+        => await Context.Set<T>().Where(predicate).ToListAsync();
 
     public async Task<T> CreateAsync(T entity)
     {
@@ -56,10 +62,4 @@ internal class GenericRepository<T> : IRepository<T> where T : BaseEntity
             
         Context.Set<T>().Remove(baseEntity);
     }
-
-    public async Task<T?> GetSingleAsync(Expression<Func<T, bool>> predicate)
-        => await Context.Set<T>().SingleOrDefaultAsync(predicate);
-
-    public virtual async Task<List<T>> GetFilteredAsync(Expression<Func<T, bool>> predicate)
-        => await Context.Set<T>().Where(predicate).ToListAsync();
 }

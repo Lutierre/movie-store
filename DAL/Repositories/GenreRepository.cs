@@ -13,5 +13,5 @@ internal class GenreRepository : GenericRepository<Genre>, IGenreRepository
    }
 
    public async Task<Genre?> GetByCodeAsync(GenreCode code) 
-      => await Context.Genres.SingleOrDefaultAsync(dto => dto.Code == (int)code);
+      => await Context.Genres.SingleOrDefaultAsync(genre => genre.Code == (int)code);
 }

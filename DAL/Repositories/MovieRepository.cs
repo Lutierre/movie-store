@@ -40,7 +40,7 @@ internal class MovieRepository : IRepository<Movie>
             return null;
         }
         
-        var existing = await _context.Set<Movie>().AddIncludes().SingleOrDefaultAsync(dto => dto.Id == id);
+        var existing = await _context.Set<Movie>().AddIncludes().SingleOrDefaultAsync(movie => movie.Id == id);
 
         if (existing == null)
         {
